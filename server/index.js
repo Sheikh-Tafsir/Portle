@@ -3,14 +3,13 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 
-
 // const auth = require('./middleware/auth')
 // const rateLimiter = require('./middleware/rateLimiter')
 
 var corsOptions = {
-  origin:  "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "*"], // Add the HTTP methods you need
-  allowedHeaders: ["Content-Type", "Authorization", "*"], // Add the headers you want to allow
+  origin: process.env.CORS_ALLOWED_ORIGINS || "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add the HTTP methods you need
+  allowedHeaders: ["Content-Type", "Authorization"], // Add the headers you want to allow
 };
 
 // Then use corsOptions in your CORS middleware setup
