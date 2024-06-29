@@ -17,7 +17,7 @@ const PortExperience = () => {
             setPageLoading(true);
             const apipath = `${apiPath}/experiences/${userInfo.id}`;
             const response = await axios.get(apipath)
-            //console.log(response.data);
+            console.log(response.data);
             if(response.status == 200){
                 setExperiences(response.data.experiences);
             }

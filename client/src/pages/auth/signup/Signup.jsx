@@ -172,9 +172,6 @@ const Signup = () => {
             {
                 name: googleName,
                 email: googleEmail,
-            }, 
-            {
-                timeout: 3000 // Set the timeout to 5 seconds (5000 milliseconds)
             })
             //console.log(response);
             
@@ -202,7 +199,7 @@ const Signup = () => {
             if (error.code === 'ECONNABORTED') {
                 // Handle timeout error
                 console.error('Error: Server not responding (timeout)');
-                setStatus('Server not responding');
+                setLoginStatus('Server not responding');
             } 
             else if(error.response.status == 401){
                 setLoginStatus(error.response.data.message);

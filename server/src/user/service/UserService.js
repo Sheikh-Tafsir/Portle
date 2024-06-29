@@ -125,15 +125,15 @@ const axios = require('axios');
             let ret2 = "";
             let ret3 = "";
 
-            // for (const project of projects) {
-            //     const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
-            //     ret2 = createResult.message;
-            // }
+            for (const project of projects) {
+                const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
+                ret2 = createResult.message;
+            }
 
-            // for (const experience of experiences) {
-            //     const createResult = await ExperienceService.createExperience(id, experience.company, experience.position, experience.dates, experience.description.join(' '));
-            //     ret3 = createResult.message;
-            // }
+            for (const experience of experiences) {
+                const createResult = await ExperienceService.createExperience(id, experience.company, experience.position, experience.dates, experience.description.join(' '));
+                ret3 = createResult.message;
+            }
             return {
                 message: `${ret1} ${ret2.trim()} ${ret3.trim()}`
             };

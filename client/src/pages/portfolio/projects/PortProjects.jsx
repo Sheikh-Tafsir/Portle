@@ -17,7 +17,7 @@ const PortProjects = () => {
             setPageLoading(true);
             const apipath = `${apiPath}/projects/${userInfo.id}`;
             const response = await axios.get(apipath)
-            //console.log(response.data);
+            console.log(response.data);
             setProjects(response.data.projects);
             setPageLoading(false);
         }
