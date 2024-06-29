@@ -1,6 +1,8 @@
 const UserModel = require("../model/UserModel");
 const ProjectService = require("../../projects/service/ProjectsService");
+const ExperienceService = require("../../experience/service/ExperienceService");
 const { Op } = require('sequelize');
+const axios = require('axios');
 // const redis = require('../../../config/redisConfig');
 
     const getAllUsers = async() =>{
@@ -43,13 +45,24 @@ const { Op } = require('sequelize');
     };
 
     //update
-    const updateUser = async (id, name, designation, github) => {
+    const updateUser = async (id, name, designation, github, cvJson) => {
         try {
             // Check if the provided name already exists for another user
-            // const existingUserWithName = await UserModel.findOne({ where: {github: github, id: { [Op.ne]: id } } });
-            // if (existingUserWithName) {
-            //     return { message: "Github name already exists" };
-            // }
+            var imageUrl = "";
+
+            if(github){
+                const existingUserWithName = await UserModel.findOne({ where: {github: github, id: { [Op.ne]: id } } });
+                if (existingUserWithName) {
+                    return { message: "Github name already exists" };
+                }
+            }
+
+            if(github){
+                const githubUsername = github.match(/github\.com\/([^\/]+)/)[1];
+                console.log(githubUsername);
+                imageUrl = await getGithubDetails(githubUsername);
+                console.log(imageUrl);
+            }
 
             // Update the user profile
             const updatedUser = await UserModel.update(
@@ -57,6 +70,8 @@ const { Op } = require('sequelize');
                 name: name,
                 designation: designation,
                 ...(github && { github: github }),
+                ...(cvJson && { cvJson: cvJson }),
+                ...(imageUrl != "" && {image: imageUrl}),
             },
             { where: { id: id }, returning: true }
             );
@@ -96,10 +111,10 @@ const { Op } = require('sequelize');
         }
     };
 
-    const extarctInformationFromCv = async (id, information, projects) => {
+    const extarctInformationFromCv = async (id, information, projects, experiences, cvJson) => {
         try{
             // Update user information
-            const updateUserInfo = await updateUser(id, information.name, information.designation, information.github);
+            const updateUserInfo = await updateUser(id, information.name, information.designation, information.github, cvJson);
             if(updateUserInfo.message != "User Profile updated"){
                 return {
                     message: updateUserInfo.message,
@@ -108,13 +123,19 @@ const { Op } = require('sequelize');
 
             let ret1 = updateUserInfo.message;
             let ret2 = "";
+            let ret3 = "";
 
-            for (const project of projects) {
-                const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
-                ret2 = createResult.message;
-            }
+            // for (const project of projects) {
+            //     const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
+            //     ret2 = createResult.message;
+            // }
+
+            // for (const experience of experiences) {
+            //     const createResult = await ExperienceService.createExperience(id, experience.company, experience.position, experience.dates, experience.description.join(' '));
+            //     ret3 = createResult.message;
+            // }
             return {
-                message: `${ret1} ${ret2.trim()}`
+                message: `${ret1} ${ret2.trim()} ${ret3.trim()}`
             };
 
         }
@@ -126,6 +147,20 @@ const { Op } = require('sequelize');
         }
     }
 
+    const getGithubDetails = async (githubUsername) => {  
+        try{
+  
+            const apipath = `https://api.github.com/users/${githubUsername}`;
+            const response = await axios.get(apipath)
+            // console.log(response.data.avatar_url);
+            return response.data.avatar_url;
+        }
+        catch(error){
+            console.log(error.message);
+
+        };
+    }   
+
 
 module.exports = {
     getAllUsers,
@@ -133,4 +168,5 @@ module.exports = {
     updateUser,
     deleteUser,
     extarctInformationFromCv,
+    getGithubDetails,
 }

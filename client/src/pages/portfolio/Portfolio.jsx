@@ -2,6 +2,7 @@ import React from 'react'
 import PortHeromain from './heromain/PortHeromain'
 import PortAbout from './about/PortAbout'
 import PortProjects from './projects/PortProjects'
+import PortExperience from './experience/PortExperience'
 
 const Portfolio = () => {
   return (
@@ -9,6 +10,7 @@ const Portfolio = () => {
         <PortHeromain/>
         <PortAbout />
         <PortProjects />
+        <PortExperience />
     </div>
   )
 }

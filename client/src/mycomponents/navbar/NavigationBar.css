@@ -44,12 +44,11 @@
         color: black;
         display: flex;
         margin: auto;
-
     }
 
     .homepage_navigation_navSubMenu{
         width: 45vw;
-        margin-left: 6.5vw;
+        margin-left: 16.5vw;
         margin-right: 0;
         /* background-color: blue; */
         display: flex;
@@ -218,6 +217,7 @@
         background-color: white;
         transform: translate(0,-97vw);
         transition: linear 0.2s; 
+
     }
 
     .homepage_navigation_navMainOpen{

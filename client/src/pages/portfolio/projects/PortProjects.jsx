@@ -10,10 +10,11 @@ import PageLoading from '@/mycomponents/loading/PageLoading';
 const PortProjects = () => {
     const {userInfo, setUserInfo} = useUserContext();
     const [projects, setProjects] = useState([]);
-    const [pageLoading, setPageLoading] = useState(true);
+    const [pageLoading, setPageLoading] = useState(false);
 
     const getProjects = async () => {  
         try{
+            setPageLoading(true);
             const apipath = `${apiPath}/projects/${userInfo.id}`;
             const response = await axios.get(apipath)
             console.log(response.data);
@@ -27,35 +28,46 @@ const PortProjects = () => {
     }   
     
     useEffect(()=>{
-        if(userInfo.id)getProjects();
+        if (userInfo.id) {
+            getProjects();
+        }
     },[userInfo])
+    
+    // useEffect(()=>{
+    //     if(userInfo?.id){
+    //         getProjects();
+    //     }
+    // },[])
   
-    if(pageLoading){
-        return(
-            <div className='portfolio-projects'>
-                <PageLoading />
-            </div>
-        )
-    }
     return (
     <div className='portfolio-projects'>
         <h1>Projects</h1>
-        <div className='mainbox'>
-            {projects.map((project) => (
-            <div className='card' key={project.id}>
-                <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" alt={project.title} />
-                <div className='textbox'>
-                <h2>{project.name}</h2>
-                <h3>Tech: {project.technology}</h3>
-                <p>{project.description}</p>
-                <div className='buttonbox'>
-                    <Button>View</Button>
-                    <Button>Code</Button>
+        {pageLoading ?
+        (
+            <PageLoading />
+        ):
+        (
+            <>
+                <div className='mainbox'>
+                    {projects && projects.map((project) => (
+                    <div className='card' key={project.id}>
+                        {/* <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" alt={project.title} /> */}
+                        <div className='textbox'>
+                        <h2>{project.name}</h2>
+                        <h3>Technology: {project.technology}</h3>
+                        <p>{project.description}</p>
+                        <div className='buttonbox'>
+                            <Button>View</Button>
+                            <Button>Code</Button>
+                        </div>
+                        </div>
+                    </div>
+                    ))}
                 </div>
-                </div>
-            </div>
-            ))}
-        </div>
+            </>
+        )
+
+        }
     </div>
   )
 }

@@ -2,6 +2,7 @@
     .portoflio-heromain .mainbox{
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
         padding: 12% 9% 7% 9%;
         min-height: 100vh;
         min-height: 49vw;
@@ -26,10 +27,17 @@
         margin-top: 0.5vw;
         margin-bottom: 1vw;
     }
+    .portoflio-heromain .textbox .buttonbox{
+        margin-top: 1.5vw;
+    }
     .portoflio-heromain .textbox Button{
         background-color: rgb(23,158,162);
         margin-bottom: 2vw;
         background-color: rgb(235,98,27);
+        margin-right: 1vw;
+    }
+    .portoflio-heromain .textbox .buttonbox Button{
+        background-color:blue;
     }
     .portoflio-heromain .iconbox{
         display: flex;
@@ -45,7 +53,7 @@
     }
 
     .portoflio-heromain .imagebox{
-        width: 42%;
+        width: 40%;
     }
     .portoflio-heromain .imagebox img{
         width: 28vw;

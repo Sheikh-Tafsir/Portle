@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEdit } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { apiPath } from '@/utils/apiPath';
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import {useUserContext} from '../../../context/UserContext';
 
 import './PortHeromain.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
+import { Link } from 'react-router-dom';
 const PortHeromain = () => {
     const {userInfo, setUserInfo} = useUserContext();
     const [user, setUser] = useState([]);
@@ -32,7 +33,7 @@ const PortHeromain = () => {
     }   
     
     useEffect(()=>{
-        if(userInfo.id)getUser();
+        getUser();
     },[userInfo])
 
     if(pageLoading){
@@ -58,9 +59,16 @@ const PortHeromain = () => {
                     <span><FaLinkedin /></span>
                     <span><SiGmail /></span>
                 </div>
+                <div className='buttonbox'>
+                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From CV</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
+                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
+                </div>
             </div>
             <div className='imagebox'>
-                <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" />
+                {user.image == "" || user.image == null ?
+                    (<img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" />):
+                    (<img src={user.image} />)
+                }
             </div>
         </div>
     </div>

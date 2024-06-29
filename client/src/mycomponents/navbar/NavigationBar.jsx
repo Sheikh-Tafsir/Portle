@@ -177,9 +177,6 @@ const NavigationBar = () => {
                   loggedIn ?
                   ( 
                     <>
-                      {/* <Link to="/profile" className='homepage_navigation_navMenuPageLinks'>Profile</Link>
-                      <Button className='' onClick={()=>handleLogout()}>logout</Button> */}
-                      <Link to="/profile/inputmethod" className='homepage_navigation_navMenuPageLinks'>Create Portfolio</Link>
                       <DropdownMenu className="cursor-pointer">
                         <DropdownMenuTrigger asChild>
                           <img src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" 

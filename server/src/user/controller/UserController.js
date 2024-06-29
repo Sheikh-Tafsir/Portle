@@ -72,8 +72,8 @@ const UserService = require('../service/UserService');
         // Parse the cleaned string to a JSON object
         const data = JSON.parse(cleanedData);
 
-        const { information, projects } = data;
-        const userService = await UserService.extarctInformationFromCv(id, information, projects);
+        const { information, projects, experience } = data;
+        const userService = await UserService.extarctInformationFromCv(id, information, projects, experience, data);
         
         res.status(200).json(userService);
       

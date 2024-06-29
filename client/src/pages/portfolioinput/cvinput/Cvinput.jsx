@@ -26,79 +26,91 @@ const Cvinput = () => {
     const [chatHistory, setChatHistory] = useState([]);
     const [portfolioObj, setPortfolioObj] = useState([]);
     const [buttonLoading, setButtonLoading] = useState(false);
+    const [uploadStatus, setUploadStatus] = useState("");
 
     const navigate = useNavigate();
     const {userInfo, setUserInfo} = useUserContext();
 
     const extractText = (event) => {
         const file = event.target.files[0];
+        if (!file) {
+            setUploadStatus("File not uploaded");
+            return;
+        }
         pdfToText(file)
             .then((text) => {
-                // console.log(text)
+                //console.log(text)
                 setInputValue(text);
+                setUploadStatus("File uploaded successfully");
             })
-            .catch((error) => console.error("Failed to extract text from pdf"));
+            .catch((error) => {
+                console.error("Failed to extract text from pdf", error);
+                setUploadStatus("Failed to extract text from file");
+            });
     }
 
       //send message
     const handleSendMessage = async () => {
-        setButtonLoading(true);
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        if(inputValue == '' || inputValue.length == 0) setUploadStatus("File not uploaded");
+        else{
+            setButtonLoading(true);
+            const genAI = new GoogleGenerativeAI(API_KEY);
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const chat = model.startChat({
-            history: chatHistory.map(message => ({
-                role: message.role,
-                parts: [{ text: message.text }] // Ensure each message has 'parts' property with an array of parts
-            })),
-            generationConfig: {
-                maxOutputTokens: 100000,
-            },
-        });
+            const chat = model.startChat({
+                history: chatHistory.map(message => ({
+                    role: message.role,
+                    parts: [{ text: message.text }] // Ensure each message has 'parts' property with an array of parts
+                })),
+                generationConfig: {
+                    maxOutputTokens: 100000,
+                },
+            });
 
-        // Define the command
-        const command = `
-        This is the cv. 
-        From this, make parts and create a JSON file like below with the needed information:
-        {
-            "information": {
-            "name": "",
-            "designation": ""
-            },
-            "experience": [
+            // Define the command
+            const command = `
+            This is the cv. 
+            From this, make parts and create a JSON file like below with the needed information:
             {
-                "company": "",
-                "position": "",
-                "dates": ""
-            }
-            ],
-            "projects": [
-            {
+                "information": {
                 "name": "",
-                "technologies": [""],
-                "description": [""]
+                "designation": ""
+                "github": ""
+                },
+                "experience": [
+                {
+                    "company": "",
+                    "position": "",
+                    "dates": "",
+                    "description": [""]
+                }
+                ],
+                "projects": [
+                {
+                    "name": "",
+                    "technologies": [""],
+                    "description": [""]
+                }
+                ],
+                "education": [
+                {
+                    "institution": "",
+                    "degree": ""
+                }
+                ]
             }
-            ],
-            "education": [
-            {
-                "institution": "",
-                "degree": ""
-            }
-            ]
-        }
-        only return the json file, don't write anything else please, not even extra symbols`;
-              
-        const msg = command + "\n" + inputValue;
-        setInputValue('');
+            only return the json file, don't write anything else please, not even extra symbols`;
+                
+            const msg = command + "\n" + inputValue;
+            setInputValue('');
 
-        const result = await chat.sendMessage(msg);
-        const response = await result.response;
-        const responseText = await response.text();
-        console.log(responseText);
-        setPortfolioObj(responseText);
-        extarctInformationFromCv(responseText)
-        setButtonLoading(false);
-        navigate('/profile', { replace: true });
+            const result = await chat.sendMessage(msg);
+            const response = await result.response;
+            const responseText = await response.text();
+            // console.log(responseText);
+            // setPortfolioObj(responseText);
+            extarctInformationFromCv(responseText)
+        }
     };
 
     const extarctInformationFromCv = async (responseText) => {  
@@ -109,6 +121,9 @@ const Cvinput = () => {
                 cv:responseText,
             })
             console.log(response.data.message);
+            setButtonLoading(false);
+            navigate('/profile', { replace: true });
+            //window.top.location.href = '/profile';
         }
         catch(error){
             console.log(error.response.data.message);
@@ -137,6 +152,7 @@ const Cvinput = () => {
                     </div>
                 </div>
             </div>
+            <p className='mt-[2vw] lg:mt-[1vw]'>{uploadStatus}</p>
             </CardContent>
         </Card>
     </div>

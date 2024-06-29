@@ -172,6 +172,9 @@ const Signup = () => {
             {
                 name: googleName,
                 email: googleEmail,
+            }, 
+            {
+                timeout: 3000 // Set the timeout to 5 seconds (5000 milliseconds)
             })
             //console.log(response);
             
@@ -188,6 +191,7 @@ const Signup = () => {
                 //const userObj=response.data.user;
                 const userObj = jwtDecode(response.data.token);
                 setUserInfo(userObj);
+                navigate('/profile', { replace: true });
             }
             else{
                 //
@@ -195,7 +199,12 @@ const Signup = () => {
         }
         catch(error){
             setButtonLoading(false);
-            if(error.response.status == 401){
+            if (error.code === 'ECONNABORTED') {
+                // Handle timeout error
+                console.error('Error: Server not responding (timeout)');
+                setStatus('Server not responding');
+            } 
+            else if(error.response.status == 401){
                 setLoginStatus(error.response.data.message);
             }
             else setLoginStatus(error.message);
