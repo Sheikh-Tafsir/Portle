@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controller/UserController");
-const authController = require("../../auth/controller/AuthController");
 
 // get all user
 router.get("", userController.getAllUsers);
@@ -18,6 +17,10 @@ router.delete("/:id", userController.deleteUser);
 //get user by username
 router.get("/:username", userController.getUsersByUsername);
 
-//get user by id
+//get user info by cv
 router.post("/extractcv/:id", userController.extarctInformationFromCv);
+
+//get user info by from github
+router.post("/extractgithub/:id", userController.extarctInformationFromGithub);
+
 module.exports = router;

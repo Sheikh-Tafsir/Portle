@@ -118,7 +118,7 @@ const Signup = () => {
                     setLoginStatus(response.data.message);
                     setButtonLoading(false);
                     // console.log(response.data);
-                    if(response.status == 200){
+                    if(response.status == 201){
                         setName('');
                         setEmail('');
                         setPassword('');
@@ -159,7 +159,7 @@ const Signup = () => {
             setLoginStatus(response.data.message);
             setButtonLoading(false);
             // console.log(response.data);
-            if(response.status == 201){
+            if(response.status == 200){
                 setName('');
                 setEmail('');
                 setPassword('');

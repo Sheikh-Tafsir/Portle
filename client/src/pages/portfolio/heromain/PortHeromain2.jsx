@@ -67,10 +67,6 @@ const PortHeromain2 = ({changeId, username}) => {
                     <span><FaLinkedin /></span>
                     <span><SiGmail /></span>
                 </div>
-                <div className='buttonbox'>
-                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From CV</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
-                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
-                </div>
             </div>
             <div className='imagebox'>
                 {user.image == "" || user.image == null ?

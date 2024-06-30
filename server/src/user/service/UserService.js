@@ -91,7 +91,8 @@ const axios = require('axios');
                     return { message: "Github name already exists" };
                 }
                 // console.log("eitao");
-                imageUrl = await getGithubDetails(githubUsername);
+                const userObj = await getGithubDetails(githubUsername);
+                imageUrl =  userObj.avatar_url;
             }
             // console.log(id);
             // console.log(name);
@@ -106,7 +107,7 @@ const axios = require('axios');
                 name: name,
                 designation: designation,
                 ...(github && { github: github }),
-                ...(cvJson && { cvJson: cvJson }),
+                ...(cvJson && { cv: cvJson }),
                 ...(imageUrl != "" && {image: imageUrl}),
             },
             { where: { id: id }, returning: true }
@@ -195,13 +196,60 @@ const axios = require('axios');
         }
     }
 
+    const extarctInformationFromGithub = async (id, github) => {
+        try {
+            console.log(id);
+            console.log(github);
+            var information = [];
+            var githubUsername;
+            if(github){
+                console.log("dhukse function e")
+                
+                const match = github.match(/github\.com\/([^\/]+)/);
+                if (match) {
+                    githubUsername = match[1];
+                }
+                else {
+                    githubUsername = github; 
+                }
+
+                // console.log("tarpor");
+                console.log(githubUsername);
+            }
+
+            information = await getGithubDetails(githubUsername);
+            
+            const updateUserInfo = await updateUser(id, information.name, information.bio, github, null);
+            console.log(updateUserInfo.message);
+
+            if(updateUserInfo.message != "User Profile updated"){
+                return {
+                    message: updateUserInfo.message,
+                }
+            }
+
+            let ret1 = updateUserInfo.message;
+
+            const createResult = await ExperienceService.createExperience(id, information.company, "", "", "");
+            let ret2 = createResult.message;
+            
+            
+        } catch (error) {
+            console.error("Error updating profile:", error.message);
+            //throw new Error("Internal server error");
+            return {
+                message: error.message,
+            };
+        }
+    };
+
     const getGithubDetails = async (githubUsername) => {  
         try{
   
             const apipath = `https://api.github.com/users/${githubUsername}`;
             const response = await axios.get(apipath)
             // console.log(response.data.avatar_url);
-            return response.data.avatar_url;
+            return response.data;
         }
         catch(error){
             console.log(error.message);
@@ -217,5 +265,6 @@ module.exports = {
     updateUser,
     deleteUser,
     extarctInformationFromCv,
+    extarctInformationFromGithub,
     getGithubDetails,
 }

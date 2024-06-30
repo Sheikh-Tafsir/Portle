@@ -96,6 +96,23 @@ const UserService = require('../service/UserService');
     }; 
 
 
+        //ExtarctInformationFromGithub
+        const extarctInformationFromGithub = async (req, res) => {
+          try {
+            const id = req.params.id;
+            
+            const { github } = req.body;
+            const userService = await UserService.extarctInformationFromGithub(id, github);
+            
+            res.status(200).json(userService);
+          
+          } catch (error) {
+            console.error('Error extracting information from Github:', error.message);
+            res.status(500).json({ error: error.message });
+          }
+        }; 
+
+
 module.exports = {
   getAllUsers,
   getUsersById,
@@ -103,5 +120,6 @@ module.exports = {
   updateUser,
   deleteUser,
   extarctInformationFromCv,
+  extarctInformationFromGithub,
 }
   

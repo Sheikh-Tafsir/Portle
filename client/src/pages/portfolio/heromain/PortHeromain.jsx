@@ -68,11 +68,12 @@ const PortHeromain = ({changeId}) => {
                     <span><SiGmail /></span>
                 </div>
                 <a href={`https://portle-api.vercel.app/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'>
+                {/* <a href={`http://localhost:5173/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'> */}
                     Portfolio : {`https://portle-api.vercel.app/portfolio/${userInfo.username}`}
                 </a>
                 <div className='buttonbox'>
                     <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From CV</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
-                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
+                    <Button className="bg-blue-600"><Link to="/profile/githubinput">Edit Portfolio From GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
                 </div>
             </div>
             <div className='imagebox'>
