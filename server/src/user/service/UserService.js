@@ -44,6 +44,27 @@ const axios = require('axios');
         }
     };
 
+    const getUsersByUsername = async( username ) =>{
+        try{
+            const user = await UserModel.findOne({
+                where: {
+                    username: username,
+                },
+                attributes: { exclude: ['password'] }
+            });
+            return {
+                message: "found user by username",
+                user:user
+            };
+        } catch (error) {
+            console.error("Error getting user by username:", error.message);
+            //throw new Error("Internal server error");
+            return {
+                message: error.message,
+            };
+        }
+    };
+
     //update
     const updateUser = async (id, name, designation, github, cvJson) => {
         try {
@@ -165,6 +186,7 @@ const axios = require('axios');
 module.exports = {
     getAllUsers,
     getUsersById,
+    getUsersByUsername,
     updateUser,
     deleteUser,
     extarctInformationFromCv,

@@ -6,6 +6,7 @@ export const checkLogin = () => {
     }
     else{
         const user = jwtDecode(token);
+        // console.log(user);
         return user;
     }
 };

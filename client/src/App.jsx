@@ -10,6 +10,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import Profile from './pages/profile/profile/Profile';
 import Cvinput from './pages/portfolioinput/cvinput/Cvinput';
 import InputMethod from './pages/portfolioinput/InputMethod';
+import Portfolio from './pages/portfolio/Portfolio';
 
 const App = () => {
   const loggedIn = checkLogin();
@@ -26,6 +27,7 @@ const App = () => {
               <Route path="/profile" element={<Profile/>} />
               <Route path="/profile/inputmethod" element={<InputMethod/>} />
               <Route path="/profile/cvinput" element={<Cvinput/>} />
+              <Route path="/portfolio/:name" element={<Portfolio />} />
             </Route>
           </Routes>
         </UserProvider>

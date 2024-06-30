@@ -24,7 +24,7 @@ const login = async (email, password) => {
                 return { message: "Password is incorrect" }
             }
 
-            const token = jwt.sign({ email: email, id: user.id, name: user.name}, SECRET_KEY);
+            const token = jwt.sign({ email: email, id: user.id, username: user.username}, SECRET_KEY);
 
             return {
                 message: "Login successful",
@@ -52,14 +52,17 @@ const signup = async (name, email, password) => {
 
         const hashedPassword = await hashPassword(password);
 
+        // Generate a unique username
+        const username = await generateUniqueUsername(name);
+
         // Create the user
         const newUser = await UserModel.create({
-            name:name,
+            username: username,
             email: email,
             password: hashedPassword, 
         });
 
-        const token = jwt.sign({ email: email, id: newUser.id, name: name}, SECRET_KEY);
+        const token = jwt.sign({ email: email, id: newUser.id, username: username}, SECRET_KEY);
 
         return {
             message: "Signup successful",
@@ -80,7 +83,7 @@ const googleLogin = async (email, name) => {
         // Check if the email is already taken
         const existingUserByGmail = await UserModel.findOne({ where: { email: email } });
         if (existingUserByGmail) {
-            const token = jwt.sign({ email: email, id: existingUserByGmail.id, name: existingUserByGmail.name}, SECRET_KEY);
+            const token = jwt.sign({ email: email, id: existingUserByGmail.id, username: existingUserByGmail.username}, SECRET_KEY);
             
             return {
                 message: "Login successful",
@@ -88,14 +91,16 @@ const googleLogin = async (email, name) => {
             };
         }
 
+        // Generate a unique username
+        const username = await generateUniqueUsername(name);
 
         // Create the user
         const newUser = await UserModel.create({
-            name: name,
+            username: username,
             email: email,
         });
 
-        const token = jwt.sign({ email: email, id: newUser.id, name: name}, SECRET_KEY);
+        const token = jwt.sign({ email: email, id: newUser.id, username: username}, SECRET_KEY);
 
         return {
             message: "Signup successful",
@@ -155,6 +160,27 @@ const validateEmail = (email) => {
         });
     });
 }
+
+const generateUniqueUsername = async (name) => {
+    let username;
+    let isUnique = false;
+
+    // Convert the name to lowercase and replace spaces with hyphens
+    const formattedName = name.toLowerCase().replace(/\s+/g, '-');
+
+    while (!isUnique) {
+        const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generate a random 4-digit number
+        username = `${formattedName}${randomNumber}`;
+
+        // Check if the username is unique
+        const existingUserByUsername = await UserModel.findOne({ where: { username: username } });
+        if (!existingUserByUsername) {
+            isUnique = true;
+        }
+    }
+
+    return username;
+};
 
 module.exports = {
     login,  

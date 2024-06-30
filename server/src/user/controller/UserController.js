@@ -24,6 +24,18 @@ const UserService = require('../service/UserService');
           }
     };
 
+    const getUsersByUsername = async (req, res) => {
+      //console.log(req.body);
+        try {
+          const username = req.params.username;
+          const userService = await UserService.getUsersByUsername(username);
+          res.status(200).json(userService);
+        } catch (error) {
+          console.error("Error getting user by username:", error.message);
+          res.status(500).json({ error: error.message });
+        }
+  };
+
 
   //update usre info
   const updateUser = async (req, res) => {
@@ -87,6 +99,7 @@ const UserService = require('../service/UserService');
 module.exports = {
   getAllUsers,
   getUsersById,
+  getUsersByUsername,
   updateUser,
   deleteUser,
   extarctInformationFromCv,

@@ -12,17 +12,17 @@
         width: 58%;
     }
     .portoflio-heromain .textbox h1{
-        font-size: 4vw;
+        font-size: 3.5vw;
         font-weight: 700;
         color:rgb(100,0,132);
     }
     .portoflio-heromain .textbox h2{
-        font-size: 4vw;
+        font-size: 3.5vw;
         font-weight: 700;
         margin-left: 1vw;
     }
     .portoflio-heromain .textbox p{
-        font-size: 1.6vw;
+        font-size: 1.3vw;
         font-weight: 600;
         margin-top: 0.5vw;
         margin-bottom: 1vw;
@@ -50,6 +50,12 @@
         margin-right: 1vw;
         border-radius: 50%;
         padding: 0.6vw;
+        margin-bottom: 1vw;
+    }
+
+    .portoflio-heromain .textbox .portfoliolink{
+        color: blue;
+        font-weight: 500;
     }
 
     .portoflio-heromain .imagebox{

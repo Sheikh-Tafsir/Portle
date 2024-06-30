@@ -38,25 +38,6 @@ const Signup = () => {
     const navigate = useNavigate();
     const {userInfo, setUserInfo} = useUserContext();
 
-    //check inputs
-    // const checkInputs = () =>{
-    //     if(name === "" || name == null || name === undefined){
-    //         return "Name is empty";
-    //     }
-    //     else if(email === "" || email == null || email === undefined){
-    //         return "Email is empty";
-    //     }
-    //     else if(password === "" || password == null || password === undefined){
-    //         return "password is empty";
-    //     }
-    //     else if(confirmPassword === "" || confirmPassword == null || confirmPassword === undefined){
-    //         return "confirm password is empty";
-    //     }
-    //     else if(password != confirmPassword){
-    //         return "password and confirm password dont match";
-    //     }
-    // }
-
     //login
     const loginFunc = async () => {         
         if(email === "" || email == null || email === undefined){
@@ -256,6 +237,18 @@ const Signup = () => {
         [ googleUser ]
     );
 
+    // const handleSpaceKeyPress = (event) => {
+    //     if (event.key === ' ') {
+    //         event.preventDefault(); // Prevents space from being input
+    //     }
+    // };
+
+    // const handleNameChange = (event) => {
+    //     let value = event.target.value;
+    //     value = value.toLowerCase().replace(/ /g, '-'); // Convert to lowercase and replace spaces with hyphens
+    //     setName(value);
+    // };
+
   return (
     <div className="signup">
         <Tabs defaultValue="login" className="w-[400px] form">
@@ -315,8 +308,12 @@ const Signup = () => {
                 <CardContent className="space-y-2">
                     <div className="space-y-1">
                         <Label htmlFor="current">Name</Label>
-                        <Input type="text" placeholder="Insert name" value={name} onChange={(event) => {setName(event.target.value);}}
+                        <Input type="text" placeholder="Insert name" value={name} 
+                            onChange={(event) => {setName(event.target.value);}}
                             onKeyDown={handleKeyPress}
+                            // onChange={handleNameChange}
+                            // onKeyDown={handleSpaceKeyPress}
+
                         />
                     </div>
                     <div className="space-y-1">

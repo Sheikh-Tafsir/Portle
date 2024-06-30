@@ -7,7 +7,7 @@ import {useUserContext} from '../../../context/UserContext';
 import './PortProjects.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
 
-const PortProjects = () => {
+const PortProjects = ({ userId }) => {
     const {userInfo, setUserInfo} = useUserContext();
     const [projects, setProjects] = useState([]);
     const [pageLoading, setPageLoading] = useState(false);
@@ -15,7 +15,7 @@ const PortProjects = () => {
     const getProjects = async () => {  
         try{
             setPageLoading(true);
-            const apipath = `${apiPath}/projects/${userInfo.id}`;
+            const apipath = `${apiPath}/projects/${userId}`;
             const response = await axios.get(apipath)
             console.log(response.data);
             setProjects(response.data.projects);
@@ -28,10 +28,10 @@ const PortProjects = () => {
     }   
     
     useEffect(()=>{
-        if (userInfo.id) {
+        if (userId) {
             getProjects();
         }
-    },[userInfo])
+    },[userId])
     
     // useEffect(()=>{
     //     if(userInfo?.id){

@@ -10,7 +10,7 @@ import {useUserContext} from '../../../context/UserContext';
 import './PortHeromain.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
 import { Link } from 'react-router-dom';
-const PortHeromain = ({changeId}) => {
+const PortHeromain2 = ({changeId, username}) => {
     const {userInfo, setUserInfo} = useUserContext();
     const [user, setUser] = useState([]);
     const [pageLoading, setPageLoading] = useState(true);
@@ -21,7 +21,7 @@ const PortHeromain = ({changeId}) => {
 
     const getUser = async () => {  
         try{
-            const apipath = `${apiPath}/users/${userInfo.username}`;
+            const apipath = `${apiPath}/users/${username}`;
             const response = await axios.get(apipath)
             // if(response.data.message == "found user by id"){
             //     setUser(response.data.user)
@@ -39,10 +39,10 @@ const PortHeromain = ({changeId}) => {
     }   
     
     useEffect(()=>{
-        if (userInfo.username) {
+        if (username) {
             getUser();
         }
-    },[userInfo])
+    },[username])
 
     if(pageLoading){
         return(
@@ -67,9 +67,6 @@ const PortHeromain = ({changeId}) => {
                     <span><FaLinkedin /></span>
                     <span><SiGmail /></span>
                 </div>
-                <a href={`https://portle-api.vercel.app/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'>
-                    Portfolio : {`https://portle-api.vercel.app/portfolio/${userInfo.username}`}
-                </a>
                 <div className='buttonbox'>
                     <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From CV</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
                     <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
@@ -86,4 +83,4 @@ const PortHeromain = ({changeId}) => {
   )
 }
 
-export default PortHeromain
+export default PortHeromain2

@@ -7,7 +7,7 @@ import {useUserContext} from '../../../context/UserContext';
 import './PortExperience.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
 
-const PortExperience = () => {
+const PortExperience = ({ userId }) => {
     const {userInfo, setUserInfo} = useUserContext();
     const [experiences, setExperiences] = useState([]);
     const [pageLoading, setPageLoading] = useState(false);
@@ -15,7 +15,7 @@ const PortExperience = () => {
     const getExperiences = async () => {  
         try{
             setPageLoading(true);
-            const apipath = `${apiPath}/experiences/${userInfo.id}`;
+            const apipath = `${apiPath}/experiences/${userId}`;
             const response = await axios.get(apipath)
             console.log(response.data);
             if(response.status == 200){
@@ -30,10 +30,10 @@ const PortExperience = () => {
     }   
     
     useEffect(()=>{
-        if(userInfo?.id){
+        if (userId) {
             getExperiences();
         }
-    },[userInfo])
+    },[userId])
     
     // useEffect(()=>{
     //     if (userInfo.id) {
