@@ -78,7 +78,7 @@ const signup = async (name, email, password) => {
 };
 
 //google login
-const googleLogin = async (email, name) => {
+const googleLogin = async (name, email) => {
     try {
         // Check if the email is already taken
         const existingUserByGmail = await UserModel.findOne({ where: { email: email } });

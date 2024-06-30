@@ -24,10 +24,10 @@ const AuthService = require('../service/AuthService');
     const signup = async (req, res) => {
       //console.log(req.body);
         try {
-          const { name, email, password } = req.body;
+          const { username, email, password } = req.body;
           // console.log(req.body);
     
-          const authService = await AuthService.signup(name, email, password);
+          const authService = await AuthService.signup(username, email, password);
                 
           if(authService.token){
             res.status(201).json(authService);
@@ -45,9 +45,9 @@ const AuthService = require('../service/AuthService');
     const googleLogin = async (req, res) => {
       // console.log(req.body);
         try {
-          const { email, name } = req.body;
+          const { username, email } = req.body;
   
-          const authService = await AuthService.googleLogin(email, name);
+          const authService = await AuthService.googleLogin(username, email);
                 
           if(authService.token)res.status(200).json(authService);
           else res.status(401).json(authService);

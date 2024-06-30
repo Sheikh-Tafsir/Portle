@@ -69,21 +69,36 @@ const axios = require('axios');
     const updateUser = async (id, name, designation, github, cvJson) => {
         try {
             // Check if the provided name already exists for another user
+            // console.log("eikhane ase");
+
             var imageUrl = "";
 
             if(github){
-                const existingUserWithName = await UserModel.findOne({ where: {github: github, id: { [Op.ne]: id } } });
+                // console.log("dhukse function e")
+                var githubUsername;
+                const match = github.match(/github\.com\/([^\/]+)/);
+                if (match) {
+                    githubUsername = match[1];
+                }
+                else {
+                    githubUsername = github; 
+                }
+
+                // console.log("tarpor");
+                console.log(githubUsername);
+                const existingUserWithName = await UserModel.findOne({ where: {github:githubUsername, id: { [Op.ne]: id } } });
                 if (existingUserWithName) {
                     return { message: "Github name already exists" };
                 }
-            }
-
-            if(github){
-                const githubUsername = github.match(/github\.com\/([^\/]+)/)[1];
-                console.log(githubUsername);
+                // console.log("eitao");
                 imageUrl = await getGithubDetails(githubUsername);
-                console.log(imageUrl);
             }
+            // console.log(id);
+            // console.log(name);
+            // console.log(designation);
+            // console.log(github);
+            // console.log(cvJson);
+            // console.log(imageUrl);
 
             // Update the user profile
             const updatedUser = await UserModel.update(
@@ -135,7 +150,12 @@ const axios = require('axios');
     const extarctInformationFromCv = async (id, information, projects, experiences, cvJson) => {
         try{
             // Update user information
+            console.log(id);
+            console.log(information)
+            console.log(cvJson);
             const updateUserInfo = await updateUser(id, information.name, information.designation, information.github, cvJson);
+            console.log(updateUserInfo.message);
+            console.log();
             if(updateUserInfo.message != "User Profile updated"){
                 return {
                     message: updateUserInfo.message,
@@ -146,18 +166,25 @@ const axios = require('axios');
             let ret2 = "";
             let ret3 = "";
 
-            for (const project of projects) {
-                const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
-                ret2 = createResult.message;
+            if(projects && projects.length > 0){
+                for (const project of projects) {
+                    const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
+                    ret2 = createResult.message;
+                }
             }
 
-            for (const experience of experiences) {
-                const createResult = await ExperienceService.createExperience(id, experience.company, experience.position, experience.dates, experience.description.join(' '));
-                ret3 = createResult.message;
+            if(experiences && experiences.length > 0){
+                for (const experience of experiences) {
+                    const createResult = await ExperienceService.createExperience(id, experience.company, experience.position, experience.dates, experience.description.join(' '));
+                    ret3 = createResult.message;
+                }
             }
+
+            //console.log(`${ret1} ${ret2.trim()} ${ret3.trim()}`)
             return {
                 message: `${ret1} ${ret2.trim()} ${ret3.trim()}`
             };
+
 
         }
         catch (error) {

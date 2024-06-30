@@ -120,7 +120,7 @@ const Cvinput = () => {
             {
                 cv:responseText,
             })
-            console.log(response.data.message);
+            //console.log(response.data.message);
             setButtonLoading(false);
             navigate('/profile', { replace: true });
             //window.top.location.href = '/profile';

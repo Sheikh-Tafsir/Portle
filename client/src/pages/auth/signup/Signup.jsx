@@ -109,7 +109,7 @@ const Signup = () => {
                     const apipath = `${apiPath}/auth/signup`;
                     const response = await axios.post(apipath, 
                     {
-                        name:name,
+                        username:name,
                         email:email,
                         password:password
                     })
@@ -151,7 +151,7 @@ const Signup = () => {
             const apipath = `${apiPath}/auth/googlelogin`;
             const response = await axios.post(apipath, 
             {
-                name: googleName,
+                username: googleName,
                 email: googleEmail,
             })
             //console.log(response);
@@ -159,7 +159,7 @@ const Signup = () => {
             setLoginStatus(response.data.message);
             setButtonLoading(false);
             // console.log(response.data);
-            if(response.status == 200){
+            if(response.status == 201){
                 setName('');
                 setEmail('');
                 setPassword('');
