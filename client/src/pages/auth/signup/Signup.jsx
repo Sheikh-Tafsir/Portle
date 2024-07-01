@@ -33,6 +33,7 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
     const [buttonLoading, setButtonLoading] = useState(false);
+    const [googleButtonLoading, setGoogleButtonLoading] = useState(false);
     const [googleUser, setGoogleUser ] = useState([]);
 
     const navigate = useNavigate();
@@ -148,6 +149,7 @@ const Signup = () => {
     //google login
     const loginGoogleFunc = async (googleEmail, googleName) => {  
         try{
+            setGoogleButtonLoading(true);
             const apipath = `${apiPath}/auth/googlelogin`;
             const response = await axios.post(apipath, 
             {
@@ -157,7 +159,7 @@ const Signup = () => {
             //console.log(response);
             
             setLoginStatus(response.data.message);
-            setButtonLoading(false);
+            setGoogleButtonLoading(false);
             // console.log(response.data);
             if(response.status == 200){
                 setName('');
@@ -292,7 +294,12 @@ const Signup = () => {
                 <CardFooter>
                     <Button onClick={googleAuthFunc}
                         className="bg-green-500 lg:w-[55%]"
-                    >Sign in with Google 🚀 </Button>
+                    >
+                        { googleButtonLoading? 
+                            <ButtonLoading/>:
+                            'Sign in with Google 🚀 '
+                        }
+                    </Button>
                 </CardFooter>
                 </Card>
             </TabsContent>

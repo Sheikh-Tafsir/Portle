@@ -4,6 +4,7 @@ import PortAbout from '@/pages/portfolio/about/PortAbout'
 import PortExperience from '@/pages/portfolio/experience/PortExperience'
 import PortHeromain from '@/pages/portfolio/heromain/PortHeromain'
 import PortProjects from '@/pages/portfolio/projects/PortProjects'
+import ProfileProjectsCreateGithub from '@/pages/portfolio/projects/ProfileProjectsCreateGithub';
 
 const Profile = () => {
   const {userInfo, setUserInfo} = useUserContext();

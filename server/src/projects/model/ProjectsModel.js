@@ -29,10 +29,10 @@ const ProjectsModel = sequelize.define('portleprojects', {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    // link: {
-    //   type: DataTypes.TEXT,
-    //   allowNull: true,
-    // },
+    link: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   },
 );
 // Define associations

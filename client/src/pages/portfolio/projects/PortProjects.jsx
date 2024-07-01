@@ -1,16 +1,20 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
+import {useLocation, Link} from "react-router-dom";
 
 import { apiPath } from '@/utils/apiPath';
 import { Button } from '@/components/ui/button'
 import {useUserContext} from '../../../context/UserContext';
 import './PortProjects.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
+import { IoIosAddCircleOutline } from "react-icons/io";
+
 
 const PortProjects = ({ userId }) => {
-    const {userInfo, setUserInfo} = useUserContext();
+    const {userInfo} = useUserContext();
     const [projects, setProjects] = useState([]);
     const [pageLoading, setPageLoading] = useState(false);
+    const location = useLocation();
 
     const getProjects = async () => {  
         try{
@@ -41,6 +45,12 @@ const PortProjects = ({ userId }) => {
   
     return (
     <div className='portfolio-projects'>
+        {location.pathname === '/profile' && projects.length < 6  &&
+            <span className='edit-button-box'>
+                <Link to="/profile/projects/create"><IoIosAddCircleOutline className='add-button'/></Link>
+            </span>
+
+        }
         <h1>Projects</h1>
         {pageLoading ?
         (
