@@ -13,7 +13,7 @@ const PrivateRoute = () => {
         <>
           <NavigationBar />
           <Outlet/> 
-          <CopyRight/>
+          {/* <CopyRight/> */}
         </>
         : 
         <Navigate to="/signup" />

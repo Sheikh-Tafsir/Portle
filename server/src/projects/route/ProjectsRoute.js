@@ -8,4 +8,7 @@ router.get("/:id", projectsController.getProjectByUserId);
 // create projects from github link
 router.post("/createfromgithublink/:userId", projectsController.createProjectFromGithubLink);
 
+// update project
+router.put("/update/:id", projectsController.updateProject);
+
 module.exports = router;

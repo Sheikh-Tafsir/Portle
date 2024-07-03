@@ -2,7 +2,7 @@ const axios = require("axios");
 const ProjectsModel = require("../model/ProjectsModel");
 
 //create
-const createProject = async (userId, name, technology, image, description) => {
+const createProjectFromCv = async (userId, name, technology, image, description) => {
     try {
             const project = await ProjectsModel.findOne({
                 where: {
@@ -35,14 +35,14 @@ const createProject = async (userId, name, technology, image, description) => {
 };
 
 //create
-const createProjectFromGithubLink = async (userId, githubProjectLink) => {
+const createProjectFromGithubLink = async (userId, githublink) => {
     try {
-            const link = await transformGitHubUrl(githubProjectLink);
+            const link = await transformGitHubUrl(githublink);
            
             const project = await ProjectsModel.findOne({
                 where: {
                     userId: userId,
-                    link: link,
+                    githublink: githublink
                 }
             });
             
@@ -59,6 +59,8 @@ const createProjectFromGithubLink = async (userId, githubProjectLink) => {
                 technology: projectObj.language,
                 image: null,
                 description: projectObj?.topics.join(" ") || null,
+                livelink: projectObj?.homepage || null,
+                githublink: githublink || null,
             });
 
             return { message: "Project created" }
@@ -93,6 +95,58 @@ const getProjectByUserId = async (userId) => {
     }
 }
 
+const getProjectById = async (id) => {
+    try{
+        const projects = await ProjectsModel.findAll({
+            where: {
+                id: id,
+            }
+        });
+        return { 
+            message: "Project Found",
+            projects: projects,
+        }
+
+    }catch (error) {
+        console.error("Error getting project:", error.message);
+        //throw new Error("error.messager");
+        return {
+            message: error.message,
+        };
+    }
+}
+
+//update
+const updateProject = async (id, name, technology, description, githublink, livelink) => {
+    try {
+            const project = await ProjectsModel.findOne({
+                where: {
+                    id: id,
+                }
+            });
+            
+            if (!project) {
+                return { message: "Project don't exists" }
+            }
+
+            if(name)project.name = name;
+            if(technology)project.technology = technology;
+            if(description)project.description = description;
+            if(githublink)project.githublink = githublink;
+            if(livelink)project.livelink = livelink;
+            await project.save();
+
+            return { message: "Project updated" }
+
+    } catch (error) {
+        console.error("Error updating project:", error.message);
+        //throw new Error("error.messager");
+        return {
+            message: error.message,
+        };
+    }
+};
+
 const transformGitHubUrl = async (url) =>{
     const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
     const match = url.match(regex);
@@ -106,9 +160,9 @@ const transformGitHubUrl = async (url) =>{
     }
 }
 
-const getGithubProjectDetails = async (link) => {  
+const getGithubProjectDetails = async (githublink) => {  
     try{
-        const apipath = `${link}`;
+        const apipath = `${githublink}`;
         const response = await axios.get(apipath)
         console.log(response.data);
         return response.data;
@@ -120,7 +174,9 @@ const getGithubProjectDetails = async (link) => {
 } 
 
 module.exports = {
-    createProject,
+    createProjectFromCv,
     createProjectFromGithubLink,
+    getProjectById,
     getProjectByUserId,
+    updateProject,
 }

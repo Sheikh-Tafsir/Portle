@@ -169,7 +169,7 @@ const axios = require('axios');
 
             if(projects && projects.length > 0){
                 for (const project of projects) {
-                    const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
+                    const createResult = await ProjectService.createProjectFromCv(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
                     ret2 = createResult.message;
                 }
             }

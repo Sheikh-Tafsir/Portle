@@ -1,6 +1,4 @@
 import React, { useState, useEffect} from 'react';
-import pdfToText from "react-pdftotext";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,7 +31,7 @@ const ProfileProjectsCreateGithub = () => {
             const apipath = `${apiPath}/projects/createfromgithublink/${userInfo.id}`;
             const response = await axios.post(apipath,
             {
-                githubProjectLink: github,
+                githublink: github,
             })
             //console.log(response.data);
             setCreateProjectStatus(response.data.message)

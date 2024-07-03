@@ -183,8 +183,8 @@ const NavigationBar = () => {
                             className='homepage_navigation_navSubMenuImg cursor-pointer'
                           />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuContent className="w-56 mt-[1vw]">
+                          <DropdownMenuLabel>{userInfo.username}</DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           <DropdownMenuGroup>
                             <DropdownMenuItem>

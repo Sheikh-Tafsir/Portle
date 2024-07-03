@@ -1,13 +1,14 @@
-.portfolio-projects{
-    padding: 3vw 10vw 5vw 10vw;
-    background-color: rgb(241,245,249);
-}
-.portfolio-projects .mainbox{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
+
 @media (min-width: 1024px) {
+    .portfolio-projects{
+        padding: 3vw 10vw 5vw 10vw;
+        background-color: rgb(241,245,249);
+    }
+    .portfolio-projects .mainbox{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
     .portfolio-projects .edit-button-box{
         display: flex;
         justify-content: end;
@@ -68,12 +69,22 @@
 }
 
 @media (min-width: 768px) and (max-width:1023px){
+    .portfolio-projects{
+        padding: 4vw 10vw 5vw 10vw;
+        background-color: rgb(241,245,249);
+    }
+    .portfolio-projects .mainbox{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
     .portfolio-projects .edit-button-box{
         display: flex;
         justify-content: end;
         margin-bottom: 1vw;
     }
     .edit-button-box .add-button{
+        font-size: 3vw;
         transition: linear 0.2s;
     }
     .portfolio-projects h1{
@@ -127,12 +138,22 @@
     }
 }
 @media (max-width: 767px) {
+    .portfolio-projects{
+        padding: 5vw 10vw 5vw 10vw;
+        background-color: rgb(241,245,249);
+    }
+    .portfolio-projects .mainbox{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
     .portfolio-projects .edit-button-box{
         display: flex;
         justify-content: end;
         margin-bottom: 1vw;
     }
     .edit-button-box .add-button{
+        font-size: 6vw;
         transition: linear 0.2s;
     }
     .portfolio-projects h1{

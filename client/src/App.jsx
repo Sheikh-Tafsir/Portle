@@ -13,6 +13,7 @@ import InputMethod from './pages/portfolioinput/InputMethod';
 import Portfolio from './pages/portfolio/Portfolio';
 import Githubinput from './pages/portfolioinput/githubinput/Githubinput';
 import ProfileProjectsCreateGithub from './pages/portfolio/projects/ProfileProjectsCreateGithub';
+import UpdateProjects from './pages/portfolio/projects/UpdateProjects';
 
 const App = () => {
   const loggedIn = checkLogin();
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="/profile/cvinput" element={<Cvinput/>} />
               <Route path="/profile/githubinput" element={<Githubinput/>} />
               <Route path="/profile/projects/create" element={<ProfileProjectsCreateGithub/>} />
+              <Route path="/profile/projects/update" element={<UpdateProjects/>} />
               <Route path="/portfolio/:name" element={<Portfolio />} />
             </Route>
           </Routes>

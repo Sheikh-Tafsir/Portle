@@ -29,7 +29,11 @@ const ProjectsModel = sequelize.define('portleprojects', {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    link: {
+    livelink: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    githublink: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
