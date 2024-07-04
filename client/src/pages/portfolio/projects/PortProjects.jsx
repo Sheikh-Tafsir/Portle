@@ -24,8 +24,10 @@ const PortProjects = ({ userId }) => {
             setPageLoading(true);
             const apipath = `${apiPath}/projects/${userId}`;
             const response = await axios.get(apipath)
-            console.log(response.data);
-            setProjects(response.data.projects);
+            //console.log(response.data);
+            if(response.status == 200){
+                setProjects(response.data.projects);
+            }
             setPageLoading(false);
         }
         catch(error){
@@ -62,10 +64,12 @@ const PortProjects = ({ userId }) => {
         (
             <>
                 <div className='mainbox'>
-                    {projects && projects.map((project) => (
+                    {projects && projects.slice(0, 6).map((project) => (
                     <div className='card' key={project.id}>
                         {/* <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" alt={project.title} /> */}
-                        <span onClick={() => navigate("/profile/projects/update", { state: { project } })} className='flex justify-end cursor-pointer'><FaEdit/></span>
+                        {location.pathname === '/profile' &&
+                            <span onClick={() => navigate("/profile/projects/update", { state: { project } })} className='flex justify-end cursor-pointer'><FaEdit/></span>
+                        }
                         <div className='textbox'>
                         <h2>{project.name}</h2>
                         <h3>Technology: {project.technology}</h3>

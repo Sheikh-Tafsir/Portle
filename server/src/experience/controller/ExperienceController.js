@@ -13,11 +13,26 @@ const createExperience = async (req, res) => {
     }
 };
 
-//create
-const geExperienceByUserId = async (req, res) => {
+
+//update
+const updateExperience = async (req, res) => {
+    // console.log(req.body);
     try {
-        const userId = req.params.id;
-        const experienceService = await ExperienceService.geExperienceByUserId(userId);
+        const id = req.params.id;
+        const { company, position, dates, description } = req.body;
+        const experienceService = await ExperienceService.updateExperience(id, company, position, dates, description);
+        res.status(200).json(experienceService);
+    } catch (error) {
+        console.error("Error updating experience:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+//get
+const getExperienceByUserId = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const experienceService = await ExperienceService.getExperienceByUserId(userId);
         res.status(200).json(experienceService);
     } catch (error) {
         console.error("Error getting experiences:", error.message);
@@ -27,5 +42,6 @@ const geExperienceByUserId = async (req, res) => {
 
 module.exports = {
     createExperience,
-    geExperienceByUserId,
+    updateExperience,
+    getExperienceByUserId,
 }

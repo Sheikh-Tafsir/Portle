@@ -4,7 +4,7 @@ import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
 const CopyRight = () => {
   return (
-    <div className='copyright'>
+    <footer className='copyright'>
         <div className='copyright_mainBox'>
             <div className='copyright_textBox'>
                 <p> &copy; 2024 Tafsir Rahman Copyright and rights reserved</p>
@@ -16,7 +16,7 @@ const CopyRight = () => {
                 <FaInstagram className='copyright_icons'/>
             </div>
         </div>
-    </div>
+    </footer>
   )
 }
 

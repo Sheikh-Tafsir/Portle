@@ -34,7 +34,37 @@ const createExperience = async ( userId, company, position, dates, description )
     }
 };
 
-const geExperienceByUserId = async (userId) => {
+//update
+const updateExperience = async ( id, company, position, dates, description ) => {
+    try {
+            const experience = await ExperienceModel.findOne({
+                where: {
+                    id: id,
+                }
+            });
+            
+            if (!experience) {
+                return { message: "Experience don't exists" }
+            }
+
+            if(company)experience.company = company;
+            if(position)experience.position = position;
+            if(dates)experience.dates = dates;
+            if(description)experience.description = description;
+            await experience.save();
+
+            return { message: "Experience updated" }
+
+    } catch (error) {
+        console.error("Error updating experience:", error.message);
+        //throw new Error("error.messager");
+        return {
+            message: error.message,
+        };
+    }
+};
+
+const getExperienceByUserId = async (userId) => {
     try{
         const experiences = await ExperienceModel.findAll({
             where: {
@@ -57,5 +87,6 @@ const geExperienceByUserId = async (userId) => {
 
 module.exports = {
     createExperience,
-    geExperienceByUserId,
+    updateExperience,
+    getExperienceByUserId,
 }

@@ -5,6 +5,7 @@ import PortAbout from './about/PortAbout';
 import PortProjects from './projects/PortProjects';
 import PortExperience from './experience/PortExperience';
 import PortHeromain2 from './heromain/PortHeromain2';
+import CopyRight from '@/mycomponents/copyright/CopyRight';
 
 const Portfolio = () => {
   const { name } = useParams();
@@ -20,6 +21,7 @@ const Portfolio = () => {
       {/* <PortAbout userId={id}/> */}
       <PortProjects userId={id}/>
       <PortExperience userId={id}/>
+      <CopyRight/>
     </div>
   );
 };

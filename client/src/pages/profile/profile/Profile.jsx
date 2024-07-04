@@ -5,6 +5,7 @@ import PortExperience from '@/pages/portfolio/experience/PortExperience'
 import PortHeromain from '@/pages/portfolio/heromain/PortHeromain'
 import PortProjects from '@/pages/portfolio/projects/PortProjects'
 import ProfileProjectsCreateGithub from '@/pages/portfolio/projects/ProfileProjectsCreateGithub';
+import CopyRight from '@/mycomponents/copyright/CopyRight';
 
 const Profile = () => {
   const {userInfo, setUserInfo} = useUserContext();
@@ -20,6 +21,7 @@ const Profile = () => {
       {/* <PortAbout userId={userInfo.id}/> */}
       <PortProjects userId={userInfo.id}/>
       <PortExperience userId={userInfo.id}/>
+      <CopyRight/>
     </div>
   )
 }

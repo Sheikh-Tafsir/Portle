@@ -1,26 +1,74 @@
 .copyright{
     /* height: 5vw; */
 }
-.copyright_mainBox{
-    /* background-color: pink; */
-    display: flex;
-    justify-content: space-between;
-    padding: 1.2vw 0;
+@media (min-width: 1024px) {
+    .copyright_mainBox{
+        /* background-color: pink; */
+        display: flex;
+        justify-content: space-between;
+        padding: 1.2vw 0;
 
-    width: 82%;
-    margin: auto;
-    border-top: 1px solid rgba(140,140,100);
+        width: 82%;
+        margin: auto;
+        border-top: 1px solid rgba(140,140,100);
+    }
+    .copyright_textBox{
+        width: 87%;
+        font-size: 1vw;
+        color: rgb(40,40,40);
+    }
+    .copyright_iconBox{
+        display: flex;
+        justify-content: space-between;
+        width: 13%;
+    }
+    .copyright_icons{
+        font-size: 1.5vw;
+    }
 }
-.copyright_textBox{
-    width: 87%;
-    font-size: 1vw;
-    color: rgb(40,40,40);
+@media (min-width: 768px) and (max-width: 1023px) {
+    .copyright_mainBox{
+        display: flex;
+        justify-content: space-between;
+        padding: 3vw 0;
+        width: 82%;
+        margin: auto;
+        border-top: 1px solid rgba(140,140,100);
+    }
+    .copyright_textBox{
+        width: 87%;
+        color: rgb(40,40,40);
+    }
+    .copyright_iconBox{
+        display: flex;
+        justify-content: space-between;
+        width: 15%;
+    }
+    .copyright_icons{
+        /* font-size: 2vw; */
+    }
 }
-.copyright_iconBox{
-    display: flex;
-    justify-content: space-between;
-    width: 13%;
-}
-.copyright_icons{
-    font-size: 1.5vw;
+
+@media (max-width: 767px) {
+    .copyright_mainBox{
+        /* display: flex;
+        justify-content: space-between; */
+        padding: 5vw 0;
+        width: 82%;
+        margin: auto;
+        border-top: 1px solid rgba(140,140,100);
+    }
+    .copyright_textBox{
+        width: 87%;
+        color: rgb(40,40,40);
+        margin-bottom: 2vw;
+    }
+    .copyright_iconBox{
+        display: flex;
+        justify-content: space-between;
+        width: 30%;
+    }
+    .copyright_icons{
+        /* font-size: 1.5vw; */
+    }
 }

@@ -157,11 +157,11 @@ const NavigationBar = () => {
   // }, [userInfo]);
 
   return (
-    <div className="homepage_navigation">
+    <header className="homepage_navigation">
         <div className={`homepage_navigation_mainBox ${isFixed? 'homepage_navigation_fixed': ''}`}>
           <div className="homepage_navigation_logoBar">
             <a href="/" className='my-auto'>
-              <img src="/navbar/logo.png" alt="navlogo" loading="lazy"/>
+              <img src="/navbar/logo2.png" alt="navlogo" loading="lazy"/>
             </a>
             <div className='my-auto navBarIconBar'>
               <GiHamburgerMenu className='my-auto navBurgerIcon navBarIconBurger text-green-900' onClick={()=> toggleResponsiveNav()}/>
@@ -241,7 +241,7 @@ const NavigationBar = () => {
             {/* <div className='navExtra' onClick={()=> respNav()}></div> */}
           </div>
         </div>
-    </div>
+    </header>
   )
 }
 

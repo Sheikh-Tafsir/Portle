@@ -32,7 +32,7 @@ const createProjectFromGithubLink = async (req, res) => {
 const getProjectByUserId = async (req, res) => {
     // console.log(req.body);
     try {
-        const userId = req.params.id;
+        const userId = req.params.userId;
         const projectsService = await ProjectsService.getProjectByUserId(userId);
         res.status(200).json(projectsService);
     } catch (error) {

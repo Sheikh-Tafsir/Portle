@@ -50,7 +50,7 @@ const ProfileProjectsCreateGithub = () => {
     <div className="w-[100%] h-[100vh] flex bg-[url('https://t3.ftcdn.net/jpg/00/94/25/52/360_F_94255289_bLOLo8dVkESH4wP4QNVUg4hWBlcBEEOg.jpg')] bg-cover bg-center">
         <Card className="w-[90vw] sm:w-[400px] mx-auto my-auto">
             <CardHeader>
-            <CardTitle>Github Link</CardTitle>
+            <CardTitle>Add Github Link</CardTitle>
             <CardDescription>Copy and paste your Github link below</CardDescription>
             </CardHeader>
             <CardContent>

@@ -2,7 +2,13 @@ const express = require("express");
 const router = express.Router();
 const experienceController = require("../controller/ExperienceController");
 
+// get
+router.get("/:userId", experienceController.getExperienceByUserId);
+
 // login user
-router.get("/:id", experienceController.geExperienceByUserId);
+router.post("/create", experienceController.createExperience);
+
+// update
+router.put("/update/:id", experienceController.updateExperience);
 
 module.exports = router;

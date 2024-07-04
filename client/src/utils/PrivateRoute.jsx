@@ -10,11 +10,11 @@ const PrivateRoute = () => {
 
     return(
         loggedIn ? 
-        <>
+        <main>
           <NavigationBar />
           <Outlet/> 
           {/* <CopyRight/> */}
-        </>
+        </main>
         : 
         <Navigate to="/signup" />
     )
