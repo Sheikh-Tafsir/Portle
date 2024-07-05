@@ -4,8 +4,9 @@ const UserService = require('../service/UserService');
     //console.log(req.body);
       try {
         const userService = await UserService.getAllUsers();
-              
+        console.log(userService);
         res.status(200).json(userService);
+        
       } catch (error) {
         console.error("Error getting all users:", error.message);
         res.status(500).json({ error: error.message });

@@ -6,6 +6,7 @@ const axios = require('axios');
 // const redis = require('../../../config/redisConfig');
 
     const getAllUsers = async() =>{
+        console.log("hi")
         try{
             const user = await UserModel.findAll({
                 attributes: { exclude: ['password'] } // Exclude the password field

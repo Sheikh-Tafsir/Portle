@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import './NavigationBar.css';
 // import {BsFillPlayCircleFill} from 'react-icons/bs';
 import {ImCross} from 'react-icons/im';
+import { FaSearch } from "react-icons/fa";
 import {GiHamburgerMenu} from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 
@@ -39,13 +40,18 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { apiPath } from '@/utils/apiPath';
+import axios from 'axios';
+const clientPath = import.meta.env.VITE_CLIENT_PATH;
 
 
 const NavigationBar = () => {
   const loggedIn = checkLogin();
   const {userInfo, setUserInfo} = useUserContext();
-
   const [menuClickedCount,setMenuClickedCount]=useState(0);
+  const [allusers, setAllusers] = useState([])
+  const [searchInput, setSearchInput] = useState('');
+
   const toggleResponsiveNav = () => {
     let homepage_navigation_navMain = document.querySelector('.homepage_navigation_navMain');
     let navBarIconBurger = document.querySelector('.navBarIconBurger');
@@ -150,11 +156,33 @@ const NavigationBar = () => {
     window.open("/", "_top");
   };
 
-  // useEffect(() => {
-  //     if (Object.keys(userInfo).length == 0 && localStorage.getItem('portleAccessToken') == '') {
-  //         window.open("/", "_top");
-  //     }
-  // }, [userInfo]);
+  const getUserList = async () => {
+    try{
+      const apipath = `${apiPath}/users`;
+      const response = await axios.get(apipath);
+      // console.log(response);
+      if(response.data.message=="found all users"){
+        setAllusers(response.data.user);
+      }
+
+    }
+    catch(error){
+        console.log(error.response.data.message);
+    };
+  }
+
+  useEffect(() => {
+    getUserList();
+  }, []);
+
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  // Filter users based on search input
+  const filteredUsers = allusers.filter(user =>
+    user.username.toLowerCase().includes(searchInput.toLowerCase()))
+  .slice(0, 8);
 
   return (
     <header className="homepage_navigation">
@@ -166,6 +194,24 @@ const NavigationBar = () => {
             <div className='my-auto navBarIconBar'>
               <GiHamburgerMenu className='my-auto navBurgerIcon navBarIconBurger text-green-900' onClick={()=> toggleResponsiveNav()}/>
               <ImCross className=' my-auto navBurgerIcon navBarIconCross text-green-900' onClick={()=> toggleResponsiveNav()}/>
+            </div>
+            <div className='searchbox'>
+              <div className='searchBar'>
+                <FaSearch/>
+                <input type="text" value={searchInput} onChange={handleSearchInputChange} />
+              </div>
+              <div className='searchlist'>
+              {searchInput && (
+                <div className='searchlist'>
+                  {filteredUsers.map(user => (
+                    <a href={`${clientPath}/portfolio/${user.username}`} target="_blank" rel="noopener noreferrer" className='user' key={user.id}>
+                      <img src={user.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRSCRrx-Ug72ewPFuGyN5z2flmPbgDeUBIOlLCSy9FpCHiCJ0tRKKq83nRaCjtHiqmY9XTtKVdndn63WbdM9E4u4jq7nmLQJ7LGbAFA9U"} alt={user.name} />
+                      <p>{user.username}</p>
+                    </a>
+                  ))}
+                </div>
+              )}
+              </div>
             </div>
           </div>
 
@@ -182,6 +228,8 @@ const NavigationBar = () => {
                           <img src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" 
                             className='homepage_navigation_navSubMenuImg cursor-pointer'
                           />
+                          {/* <img src="" 
+                            className='homepage_navigation_navSubMenuImg cursor-pointer'/> */}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 mt-[1vw]">
                           <DropdownMenuLabel>{userInfo.username}</DropdownMenuLabel>

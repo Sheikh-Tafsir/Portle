@@ -10,7 +10,9 @@ import {useUserContext} from '../../../context/UserContext';
 import './PortHeromain.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
 import { Link } from 'react-router-dom';
+const clientPath = import.meta.env.VITE_CLIENT_PATH;
 const PortHeromain = ({changeId}) => {
+
     const {userInfo, setUserInfo} = useUserContext();
     const [user, setUser] = useState([]);
     const [pageLoading, setPageLoading] = useState(true);
@@ -67,7 +69,7 @@ const PortHeromain = ({changeId}) => {
                     <span><FaLinkedin /></span>
                     <span><SiGmail /></span>
                 </div>
-                <a href={`https://portle-api.vercel.app/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'>
+                <a href={`${clientPath}/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'>
                 {/* <a href={`http://localhost:5173/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'> */}
                     Portfolio : {`https://portle-api.vercel.app/portfolio/${userInfo.username}`}
                 </a>
