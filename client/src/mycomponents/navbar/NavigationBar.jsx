@@ -204,10 +204,14 @@ const NavigationBar = () => {
               {searchInput && (
                 <div className='searchlist'>
                   {filteredUsers.map(user => (
-                    <a href={`${clientPath}/portfolio/${user.username}`} target="_blank" rel="noopener noreferrer" className='user' key={user.id}>
+                    // <a href={`${clientPath}/portfolio/${user.username}`} target="_blank" rel="noopener noreferrer" className='user' key={user.id}>
+                    //   <img src={user.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRSCRrx-Ug72ewPFuGyN5z2flmPbgDeUBIOlLCSy9FpCHiCJ0tRKKq83nRaCjtHiqmY9XTtKVdndn63WbdM9E4u4jq7nmLQJ7LGbAFA9U"} alt={user.name} />
+                    //   <p>{user.username}</p>
+                    // </a>
+                    <Link to={`/portfolio/${user.username}`} className='user' key={user.id}>
                       <img src={user.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRSCRrx-Ug72ewPFuGyN5z2flmPbgDeUBIOlLCSy9FpCHiCJ0tRKKq83nRaCjtHiqmY9XTtKVdndn63WbdM9E4u4jq7nmLQJ7LGbAFA9U"} alt={user.name} />
                       <p>{user.username}</p>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}

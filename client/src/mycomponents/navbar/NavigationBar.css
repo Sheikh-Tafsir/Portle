@@ -72,7 +72,7 @@
         height: 2.5vw;
         border-radius: 50%;
         border: 1px solid black;
-        margin-right: 0.5vw;
+        margin-right: 0.8vw;
     }
 
     .homepage_navigation_navMain{
@@ -110,7 +110,7 @@
     }
     .homepage_navigation_loginButton{
         background-color: rgb(9,111,88);
-        background-color: rgb(140,140,140);
+        background-color: rgb(8,36,54);
         font-size: 1.vw;
         padding: 0.8vw 1.1vw;
         border-radius: 0.7vw;
@@ -233,6 +233,7 @@
     }
     .homepage_navigation_loginButton{
         background-color: rgb(9,111,88);
+        background-color: rgb(8,36,54);
         width: 70%;
         margin: auto;
         color: white;
@@ -359,6 +360,7 @@
     }
     .homepage_navigation_loginButton{
         background-color: rgb(9,111,88);
+        background-color: rgb(8,36,54);
         width: 70%;
         margin: auto;
         color: white;

@@ -16,6 +16,7 @@ import ProfileProjectsCreateGithub from './pages/portfolio/projects/ProfileProje
 import UpdateProjects from './pages/portfolio/projects/UpdateProjects';
 import UpdateExperience from './pages/portfolio/experience/UpdateExperience';
 import CreateExperience from './pages/portfolio/experience/CreateExperience';
+import PublicRoute from './utils/PublicRoute';
 
 const App = () => {
   const loggedIn = checkLogin();
@@ -28,6 +29,10 @@ const App = () => {
             <Route path="/login" element={loggedIn ? <Navigate to="/" replace />: <Login />} />
             <Route path="/signup" element={loggedIn ? <Navigate to="/" replace />: <Signup />} />
 
+            <Route element={<PublicRoute/>}>
+              <Route path="/portfolio/:name" element={<Portfolio />} />
+            </Route>
+            
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile/>} />
               <Route path="/profile/inputmethod" element={<InputMethod/>} />
@@ -37,7 +42,6 @@ const App = () => {
               <Route path="/profile/projects/update" element={<UpdateProjects/>} />
               <Route path="/profile/experiences/create" element={<CreateExperience/>} />
               <Route path="/profile/experiences/update" element={<UpdateExperience/>} />
-              <Route path="/portfolio/:name" element={<Portfolio />} />
             </Route>
           </Routes>
         </UserProvider>
