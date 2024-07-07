@@ -5,6 +5,9 @@ const projectsController = require("../controller/ProjectsController");
 // get projects by user id
 router.get("/:userId", projectsController.getProjectByUserId);
 
+// create projects
+router.post("/create", projectsController.createProject);
+
 // create projects from github link
 router.post("/createfromgithublink/:userId", projectsController.createProjectFromGithubLink);
 

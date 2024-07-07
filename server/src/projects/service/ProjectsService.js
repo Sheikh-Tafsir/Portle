@@ -2,7 +2,7 @@ const axios = require("axios");
 const ProjectsModel = require("../model/ProjectsModel");
 
 //create
-const createProjectFromCv = async (userId, name, technology, image, description) => {
+const createProject = async (userId, name, technology, image, description, githublink) => {
     try {
             const project = await ProjectsModel.findOne({
                 where: {
@@ -18,9 +18,10 @@ const createProjectFromCv = async (userId, name, technology, image, description)
             const newProject = await ProjectsModel.create({
                 userId: userId,
                 name: name,
-                technology: technology,
-                image: image,
-                description: description,
+                technology: technology || null,
+                image: image || null,
+                description: description || null,
+                githublink: githublink || null,
             });
 
             return { message: "Project created" }
@@ -174,7 +175,7 @@ const getGithubProjectDetails = async (githublink) => {
 } 
 
 module.exports = {
-    createProjectFromCv,
+    createProject,
     createProjectFromGithubLink,
     getProjectById,
     getProjectByUserId,

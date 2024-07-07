@@ -1,11 +1,11 @@
 const ProjectsService = require('../service/ProjectsService');
 
 //create
-const createProjectFromCv = async (req, res) => {
+const createProject = async (req, res) => {
     // console.log(req.body);
     try {
-        const { userId, name, technology, image, description } = req.body;
-        const projectsService = await ProjectsService.createProject(userId, name, technology, image, description);
+        const { userId, name, technology, image, description, githublink } = req.body;
+        const projectsService = await ProjectsService.createProject(userId, name, technology, image, description, githublink);
         res.status(200).json(projectsService);
     } catch (error) {
         console.error("Error creating project:", error.message);
@@ -69,7 +69,7 @@ const updateProject = async (req, res) => {
 };
 
 module.exports = {
-    createProjectFromCv,
+    createProject,
     getProjectByUserId,
     getProjectById,
     createProjectFromGithubLink,

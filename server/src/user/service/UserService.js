@@ -3,6 +3,8 @@ const ProjectService = require("../../projects/service/ProjectsService");
 const ExperienceService = require("../../experience/service/ExperienceService");
 const { Op } = require('sequelize');
 const axios = require('axios');
+require('dotenv').config();
+const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 // const redis = require('../../../config/redisConfig');
 
     const getAllUsers = async() =>{
@@ -85,7 +87,7 @@ const axios = require('axios');
                 }
 
                 // console.log("tarpor");
-                console.log(githubUsername);
+                //console.log(githubUsername);
                 const existingUserWithName = await UserModel.findOne({ where: {github:githubUsername, id: { [Op.ne]: id } } });
                 if (existingUserWithName) {
                     return { message: "Github name already exists" };
@@ -151,25 +153,26 @@ const axios = require('axios');
     const extarctInformationFromCv = async (id, information, projects, experiences, cvJson) => {
         try{
             // Update user information
-            console.log(id);
-            console.log(information)
-            console.log(cvJson);
+            // console.log(id);
+            // console.log(information)
+            // console.log(cvJson);
             const updateUserInfo = await updateUser(id, information.name, information.designation, information.github, cvJson);
-            console.log(updateUserInfo.message);
-            console.log();
-            if(updateUserInfo.message != "User Profile updated"){
+            // console.log(updateUserInfo.message);
+
+            let ret1 = updateUserInfo.message;
+            if(ret1 != "User Profile updated"){
                 return {
-                    message: updateUserInfo.message,
+                    message: ret1,
                 }
             }
 
-            let ret1 = updateUserInfo.message;
+            
             let ret2 = "";
             let ret3 = "";
 
             if(projects && projects.length > 0){
                 for (const project of projects) {
-                    const createResult = await ProjectService.createProjectFromCv(id, project.name, project.technologies.join(', '), '', project.description.join(' '));
+                    const createResult = await ProjectService.createProject(id, project.name, project.technologies.join(', '), '', project.description.join(' '), '');
                     ret2 = createResult.message;
                 }
             }
@@ -198,12 +201,12 @@ const axios = require('axios');
 
     const extarctInformationFromGithub = async (id, github) => {
         try {
-            console.log(id);
-            console.log(github);
+            // console.log(id);
+            // console.log(github);
             var information = [];
             var githubUsername;
             if(github){
-                console.log("dhukse function e")
+                // console.log("dhukse github function e")
                 
                 const match = github.match(/github\.com\/([^\/]+)/);
                 if (match) {
@@ -214,25 +217,42 @@ const axios = require('axios');
                 }
 
                 // console.log("tarpor");
-                console.log(githubUsername);
+                // console.log(githubUsername);
             }
 
             information = await getGithubDetails(githubUsername);
             
             const updateUserInfo = await updateUser(id, information.name, information.bio, github, null);
-            console.log(updateUserInfo.message);
+            // console.log(updateUserInfo.message);
+            let ret1 = updateUserInfo.message;
 
-            if(updateUserInfo.message != "User Profile updated"){
+            if(ret1 != "User Profile updated"){
                 return {
-                    message: updateUserInfo.message,
+                    message: ret1,
                 }
             }
 
-            let ret1 = updateUserInfo.message;
 
-            const createResult = await ExperienceService.createExperience(id, information.company, "", "", "");
-            let ret2 = createResult.message;
+            const experienceService = await ExperienceService.createExperience(id, information.company, "", "", "");
+            let ret2 = experienceService.message;
             
+            let ret3= '';
+            const projects = await getPinnedRepos(githubUsername);
+            console.log(projects)
+            if(projects && projects.length > 0){
+                for (const project of projects) {
+                    const projectService = await ProjectService.createProject(id, project.name, '', '', project.description, project.url);
+                    ret3 = projectService.message;
+                }
+            }
+
+            // console.log(`${ret1} ${ret2.trim()} ${ret3.trim()}`)
+            // console.log(ret3);
+            return {
+                message: `${ret1} ${ret2.trim()} ${ret3.trim()}`
+                // message: ret3
+            };
+
             
         } catch (error) {
             console.error("Error updating profile:", error.message);
@@ -255,7 +275,43 @@ const axios = require('axios');
             console.log(error.message);
 
         };
-    }   
+    }  
+
+    const getPinnedRepos = async (username) => {
+        const query = `
+          {
+            user(login: "${username}") {
+              pinnedItems(first: 6, types: REPOSITORY) {
+                nodes {
+                  ... on Repository {
+                    name
+                    description
+                    url
+                    stargazerCount
+                    forkCount
+                  }
+                }
+              }
+            }
+          }
+        `;
+  
+        try {
+          const response = await axios.post(
+            'https://api.github.com/graphql',
+            { query },
+            {
+              headers: {
+                Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`,
+              },
+            }
+          );
+          console.log(response.data.data.user.pinnedItems.nodes);
+          return response.data.data.user.pinnedItems.nodes;
+        } catch (err) {
+          console.log(err);
+        } 
+    } 
 
 
 module.exports = {
@@ -267,4 +323,5 @@ module.exports = {
     extarctInformationFromCv,
     extarctInformationFromGithub,
     getGithubDetails,
+    getPinnedRepos,
 }

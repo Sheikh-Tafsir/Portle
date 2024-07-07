@@ -107,7 +107,7 @@ const Cvinput = () => {
             const result = await chat.sendMessage(msg);
             const response = await result.response;
             const responseText = await response.text();
-            console.log(responseText);
+            //console.log(responseText);
             // setPortfolioObj(responseText);
             extarctInformationFromCv(responseText)
         }
