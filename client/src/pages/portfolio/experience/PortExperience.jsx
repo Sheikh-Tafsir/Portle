@@ -10,6 +10,8 @@ import PageLoading from '@/mycomponents/loading/PageLoading';
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
+import { DialogDemo } from '@/mycomponents/dialog/DialogDemo';
 
 const PortExperience = ({ userId }) => {
     const navigate = useNavigate();
@@ -46,6 +48,23 @@ const PortExperience = ({ userId }) => {
     //         getExperiences();
     //     }
     // },[])
+
+    const deleteExperience = async (id) => {
+        try{
+            setPageLoading(true);
+            const apipath = `${apiPath}/experiences/delete/${id}`;
+            const response = await axios.delete(apipath)
+            console.log(response.data.message);
+        }
+        catch(error){
+            console.log(error.response.data.message);
+            
+        }
+        finally{
+            setPageLoading(false);
+            getExperiences();
+        };
+    }
   return (
     <div className='portfolio-experience'>
         {location.pathname === '/profile' &&
@@ -70,9 +89,18 @@ const PortExperience = ({ userId }) => {
                             <span></span>
                             {/* <div className='circle-pointer'></div> */}
                             <div className='textbox'>
-                                {location.pathname === '/profile' &&
-                                    <div onClick={() => navigate("/profile/experiences/update", { state: { experience } })} className='flex justify-end cursor-pointer'><FaEdit/></div>
-                                }
+                                <div className='flex justify-end'>
+                                    {location.pathname === '/profile' &&
+                                        <div onClick={() => navigate("/profile/experiences/update", { state: { experience } })} className='flex justify-end cursor-pointer'><FaEdit/></div>
+                                    }
+                                    <DialogDemo
+                                        title="Delete Experience"
+                                        description="Make sure you want to delete your project before click."
+                                        buttonLabel="Delete"
+                                        onSave={()=>deleteExperience(experience.id)}
+                                    />
+
+                                </div>
                                 <h2>{experience.company}</h2>
                                 <h3>{experience.position}</h3>
                                 <p>{experience.description}</p>

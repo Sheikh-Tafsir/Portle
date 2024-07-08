@@ -64,6 +64,54 @@ const updateExperience = async ( id, company, position, dates, description ) => 
     }
 };
 
+//delete
+const deleteExperience = async (id) =>{
+    try{
+        const result = await ExperienceModel.destroy({
+            where: { id: id }
+        });
+
+        if (result === 0) {
+            return {
+                message: 'Experience not found',
+            };
+        }
+
+        return {
+            message: 'Experience deleted successfully',
+        };
+    }catch (error) {
+        console.error("Error deleting experience:", error.message);
+        //throw new Error("error.messager");
+        return {
+            message: error.message,
+        };
+    }
+}
+
+const deleteExperiencesByUserId = async (userId) => {
+    try {
+        const result = await ExperienceModel.destroy({
+            where: { userId: userId }
+        });
+
+        if (result === 0) {
+            return {
+                message: 'Experiences not found',
+            };
+        }
+
+        return {
+            message: 'Experiences deleted successfully',
+        };
+    } catch (error) {
+        console.error("Error deleting experiences:", error.message);
+        return {
+            message: error.message,
+        };
+    }
+}
+
 const getExperienceByUserId = async (userId) => {
     try{
         const experiences = await ExperienceModel.findAll({
@@ -88,5 +136,7 @@ const getExperienceByUserId = async (userId) => {
 module.exports = {
     createExperience,
     updateExperience,
+    deleteExperience,
+    deleteExperiencesByUserId,
     getExperienceByUserId,
 }

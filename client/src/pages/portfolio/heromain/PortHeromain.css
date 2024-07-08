@@ -45,7 +45,7 @@
         color: white;
         
     }
-    .portoflio-heromain .iconbox span{
+    .portoflio-heromain .iconbox a{
         background-color: rgb(100,0,132);
         margin-right: 1vw;
         border-radius: 50%;

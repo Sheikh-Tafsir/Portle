@@ -198,7 +198,7 @@ const NavigationBar = () => {
             <div className='searchbox'>
               <div className='searchBar'>
                 <FaSearch/>
-                <input type="text" value={searchInput} onChange={handleSearchInputChange} />
+                <input type="text" value={searchInput} onChange={handleSearchInputChange} placeholder='Search user'/>
               </div>
               <div className='searchlist'>
               {searchInput && (
@@ -229,11 +229,13 @@ const NavigationBar = () => {
                     <>
                       <DropdownMenu className="cursor-pointer">
                         <DropdownMenuTrigger asChild>
-                          <img src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" 
-                            className='homepage_navigation_navSubMenuImg cursor-pointer'
-                          />
-                          {/* <img src="" 
-                            className='homepage_navigation_navSubMenuImg cursor-pointer'/> */}
+                          {userInfo.image ?
+                            <img src={userInfo.image} className='homepage_navigation_navSubMenuImg cursor-pointer' />
+                            :
+                            <img src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" 
+                              className='homepage_navigation_navSubMenuImg cursor-pointer'
+                            />
+                          }
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 mt-[1vw]">
                           <DropdownMenuLabel>{userInfo.username}</DropdownMenuLabel>

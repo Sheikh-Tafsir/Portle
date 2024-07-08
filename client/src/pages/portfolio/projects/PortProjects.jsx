@@ -9,6 +9,8 @@ import './PortProjects.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
+import { DialogDemo } from '@/mycomponents/dialog/DialogDemo';
 
 
 const PortProjects = ({ userId }) => {
@@ -47,6 +49,23 @@ const PortProjects = ({ userId }) => {
     //         getProjects();
     //     }
     // },[])
+    const deleteProject = async (id) => {
+        try{
+            setPageLoading(true);
+            const apipath = `${apiPath}/projects/delete/${id}`;
+            const response = await axios.delete(apipath)
+            console.log(response.data.message);
+        }
+        catch(error){
+            console.log(error.response.data.message);
+            
+        }
+        finally{
+            setPageLoading(false);
+            getProjects();
+        };
+    }
+
   
     return (
     <div className='portfolio-projects'>
@@ -67,13 +86,21 @@ const PortProjects = ({ userId }) => {
                     {projects && projects.slice(0, 6).map((project) => (
                     <div className='card' key={project.id}>
                         {/* <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" alt={project.title} /> */}
-                        {location.pathname === '/profile' &&
-                            <span onClick={() => navigate("/profile/projects/update", { state: { project } })} className='flex justify-end cursor-pointer'><FaEdit/></span>
-                        }
+                        <div className='flex justify-end'>
+                            {location.pathname === '/profile' &&
+                                <FaEdit onClick={() => navigate("/profile/projects/update", { state: { project } })} className='edit-button cursor-pointer'/>
+                            }
+                            <DialogDemo
+                                title="Delete Project"
+                                description="Make sure you want to delete your project before click."
+                                buttonLabel="Delete"
+                                onSave={()=>deleteProject(project.id)}
+                            />
+                        </div>
                         <div className='textbox'>
                         <h2>{project.name}</h2>
-                        <h3>Technology: {project.technology}</h3>
-                        <p>{project.description}</p>
+                        {project.technology && <h3>Technology: {project.technology}</h3>}
+                        {project.description && <p>{project.description}</p>}
                         <div className='buttonbox'>
                             {project.livelink && <Button><a href={project.livelink} target="_blank" rel="noopener noreferrer">View</a></Button>}
                             {project.githublink && <Button><a href={project.githublink} target="_blank" rel="noopener noreferrer">Code</a></Button>}

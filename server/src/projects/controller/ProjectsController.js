@@ -27,6 +27,33 @@ const createProjectFromGithubLink = async (req, res) => {
     }
 };
 
+//update
+const updateProject = async (req, res) => {
+    // console.log(req.body);
+    try {
+        const id = req.params.id;
+        const { name, technology, description, githublink, livelink } = req.body;
+        const projectsService = await ProjectsService.updateProject(id, name, technology, description, githublink, livelink);
+        res.status(200).json(projectsService);
+    } catch (error) {
+        console.error("Error creating project from github link:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+//delete
+const deleteProject = async (req, res) => {
+    // console.log(req.body);
+    try {
+        const id = req.params.id;
+        const projectService = await ProjectsService.deleteProject(id);
+        res.status(200).json(projectService);
+    } catch (error) {
+        console.error("Error deleing project:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 //get
 const getProjectByUserId = async (req, res) => {
@@ -54,24 +81,12 @@ const getProjectById = async (req, res) => {
     }
 };
 
-//update
-const updateProject = async (req, res) => {
-    // console.log(req.body);
-    try {
-        const id = req.params.id;
-        const { name, technology, description, githublink, livelink } = req.body;
-        const projectsService = await ProjectsService.updateProject(id, name, technology, description, githublink, livelink);
-        res.status(200).json(projectsService);
-    } catch (error) {
-        console.error("Error creating project from github link:", error.message);
-        res.status(500).json({ error: error.message });
-    }
-};
-
 module.exports = {
     createProject,
-    getProjectByUserId,
-    getProjectById,
     createProjectFromGithubLink,
     updateProject,
+    deleteProject,
+    getProjectByUserId,
+    getProjectById,
+
 }

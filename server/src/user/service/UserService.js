@@ -152,6 +152,9 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 
     const extarctInformationFromCv = async (id, information, projects, experiences, cvJson) => {
         try{
+            await ProjectService.deleteProjectsByUserId(id);
+            await ExperienceService.deleteExperiencesByUserId(id);
+
             // Update user information
             // console.log(id);
             // console.log(information)
@@ -201,6 +204,8 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 
     const extarctInformationFromGithub = async (id, github) => {
         try {
+            await ProjectService.deleteProjectsByUserId(id);
+            await ExperienceService.deleteExperiencesByUserId(id);
             // console.log(id);
             // console.log(github);
             var information = [];

@@ -75,6 +75,86 @@ const createProjectFromGithubLink = async (userId, githublink) => {
     }
 };
 
+//update
+const updateProject = async (id, name, technology, description, githublink, livelink) => {
+    try {
+            const project = await ProjectsModel.findOne({
+                where: {
+                    id: id,
+                }
+            });
+            
+            if (!project) {
+                return { message: "Project don't exists" }
+            }
+
+            if(name)project.name = name;
+            if(technology)project.technology = technology;
+            if(description)project.description = description;
+            if(githublink)project.githublink = githublink;
+            if(livelink)project.livelink = livelink;
+            await project.save();
+
+            return { message: "Project updated" }
+
+    } catch (error) {
+        console.error("Error updating project:", error.message);
+        //throw new Error("error.messager");
+        return {
+            message: error.message,
+        };
+    }
+};
+
+//delete
+const deleteProject = async (id) =>{
+    try{
+        const result = await ProjectsModel.destroy({
+            where: { id: id }
+        });
+
+        if (result === 0) {
+            return {
+                message: 'Project not found',
+            };
+        }
+
+        return {
+            message: 'Project deleted successfully',
+        };
+    }catch (error) {
+        console.error("Error deleting project:", error.message);
+        //throw new Error("error.messager");
+        return {
+            message: error.message,
+        };
+    }
+}
+
+const deleteProjectsByUserId = async (userId) => {
+    try {
+        const result = await ProjectsModel.destroy({
+            where: { userId: userId }
+        });
+
+        if (result === 0) {
+            return {
+                message: 'Projects not found',
+            };
+        }
+
+        return {
+            message: 'Projects deleted successfully',
+        };
+    } catch (error) {
+        console.error("Error deleting projects:", error.message);
+        return {
+            message: error.message,
+        };
+    }
+}
+
+
 const getProjectByUserId = async (userId) => {
     try{
         const projects = await ProjectsModel.findAll({
@@ -117,37 +197,6 @@ const getProjectById = async (id) => {
     }
 }
 
-//update
-const updateProject = async (id, name, technology, description, githublink, livelink) => {
-    try {
-            const project = await ProjectsModel.findOne({
-                where: {
-                    id: id,
-                }
-            });
-            
-            if (!project) {
-                return { message: "Project don't exists" }
-            }
-
-            if(name)project.name = name;
-            if(technology)project.technology = technology;
-            if(description)project.description = description;
-            if(githublink)project.githublink = githublink;
-            if(livelink)project.livelink = livelink;
-            await project.save();
-
-            return { message: "Project updated" }
-
-    } catch (error) {
-        console.error("Error updating project:", error.message);
-        //throw new Error("error.messager");
-        return {
-            message: error.message,
-        };
-    }
-};
-
 const transformGitHubUrl = async (url) =>{
     const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
     const match = url.match(regex);
@@ -177,7 +226,10 @@ const getGithubProjectDetails = async (githublink) => {
 module.exports = {
     createProject,
     createProjectFromGithubLink,
+    updateProject,
+    deleteProject,
+    deleteProjectsByUserId,
     getProjectById,
     getProjectByUserId,
-    updateProject,
+    
 }

@@ -11,4 +11,7 @@ router.post("/create", experienceController.createExperience);
 // update
 router.put("/update/:id", experienceController.updateExperience);
 
+// delete
+router.delete("/delete/:id", experienceController.deleteExperience);
+
 module.exports = router;

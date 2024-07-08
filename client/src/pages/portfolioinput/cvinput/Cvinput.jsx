@@ -54,6 +54,7 @@ const Cvinput = () => {
         if(inputValue == '' || inputValue.length == 0) setUploadStatus("File not uploaded");
         else{
             setButtonLoading(true);
+            setUploadStatus("please wait");
             const genAI = new GoogleGenerativeAI(API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -122,6 +123,7 @@ const Cvinput = () => {
             })
             //console.log(response.data.message);
             setButtonLoading(false);
+            setUploadStatus("Complete");
             navigate('/profile', { replace: true });
             //window.top.location.href = '/profile';
         }

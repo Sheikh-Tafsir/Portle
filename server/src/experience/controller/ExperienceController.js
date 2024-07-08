@@ -28,6 +28,19 @@ const updateExperience = async (req, res) => {
     }
 };
 
+//delete
+const deleteExperience = async (req, res) => {
+    // console.log(req.body);
+    try {
+        const id = req.params.id;
+        const experienceService = await ExperienceService.deleteExperience(id);
+        res.status(200).json(experienceService);
+    } catch (error) {
+        console.error("Error deleing experience:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 //get
 const getExperienceByUserId = async (req, res) => {
     try {
@@ -43,5 +56,6 @@ const getExperienceByUserId = async (req, res) => {
 module.exports = {
     createExperience,
     updateExperience,
+    deleteExperience,
     getExperienceByUserId,
 }

@@ -24,7 +24,7 @@ const login = async (email, password) => {
                 return { message: "Password is incorrect" }
             }
 
-            const token = jwt.sign({ email: email, id: user.id, username: user.username}, SECRET_KEY);
+            const token = jwt.sign({ email: email, id: user.id, username: user.username, image: user.image}, SECRET_KEY);
 
             return {
                 message: "Login successful",
@@ -83,7 +83,7 @@ const googleLogin = async (name, email) => {
         // Check if the email is already taken
         const existingUserByGmail = await UserModel.findOne({ where: { email: email } });
         if (existingUserByGmail) {
-            const token = jwt.sign({ email: email, id: existingUserByGmail.id, username: existingUserByGmail.username}, SECRET_KEY);
+            const token = jwt.sign({ email: email, id: existingUserByGmail.id, username: existingUserByGmail.username, image: existingUserByGmail.image}, SECRET_KEY);
             
             return {
                 message: "Login successful",

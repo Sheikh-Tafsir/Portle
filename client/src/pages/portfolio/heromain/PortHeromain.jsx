@@ -65,9 +65,9 @@ const PortHeromain = ({changeId}) => {
                 <p>I am a {user.designation}</p>
                 <Button>About Me</Button>
                 <div className='iconbox'>
-                    <span><FaGithub /></span>
-                    <span><FaLinkedin /></span>
-                    <span><SiGmail /></span>
+                    <a href={`${user.github}`} target="_blank" rel="noopener noreferrer" ><FaGithub /></a>
+                    <a href="" target="_blank" rel="noopener noreferrer" ><FaLinkedin /></a>
+                    <a href="" target="_blank" rel="noopener noreferrer" ><SiGmail /></a>
                 </div>
                 <a href={`${clientPath}/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'>
                 {/* <a href={`http://localhost:5173/portfolio/${userInfo.username}`} target="_blank" rel="noopener noreferrer" className='portfoliolink'> */}
@@ -80,7 +80,7 @@ const PortHeromain = ({changeId}) => {
             </div>
             <div className='imagebox'>
                 {user.image == "" || user.image == null ?
-                    (<img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" />):
+                    (<img src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" />):
                     (<img src={user.image} />)
                 }
             </div>

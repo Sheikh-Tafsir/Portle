@@ -14,4 +14,7 @@ router.post("/createfromgithublink/:userId", projectsController.createProjectFro
 // update project
 router.put("/update/:id", projectsController.updateProject);
 
+// delete project
+router.delete("/delete/:id", projectsController.deleteProject);
+
 module.exports = router;
