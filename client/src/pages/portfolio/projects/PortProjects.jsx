@@ -88,14 +88,17 @@ const PortProjects = ({ userId }) => {
                         {/* <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" alt={project.title} /> */}
                         <div className='flex justify-end'>
                             {location.pathname === '/profile' &&
-                                <FaEdit onClick={() => navigate("/profile/projects/update", { state: { project } })} className='edit-button cursor-pointer'/>
+                                <>
+                                    <FaEdit onClick={() => navigate("/profile/projects/update", { state: { project } })} className='edit-button cursor-pointer'/>
+                                    <DialogDemo
+                                        title="Delete Project"
+                                        description="Make sure you want to delete your project before click."
+                                        buttonLabel="Delete"
+                                        onSave={()=>deleteProject(project.id)}
+                                    />
+                                 </>
                             }
-                            <DialogDemo
-                                title="Delete Project"
-                                description="Make sure you want to delete your project before click."
-                                buttonLabel="Delete"
-                                onSave={()=>deleteProject(project.id)}
-                            />
+                            
                         </div>
                         <div className='textbox'>
                         <h2>{project.name}</h2>

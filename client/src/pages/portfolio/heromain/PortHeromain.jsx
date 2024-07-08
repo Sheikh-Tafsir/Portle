@@ -65,7 +65,8 @@ const PortHeromain = ({changeId}) => {
                 <p>I am a {user.designation}</p>
                 <Button>About Me</Button>
                 <div className='iconbox'>
-                    <a href={`${user.github}`} target="_blank" rel="noopener noreferrer" ><FaGithub /></a>
+                    
+                    <a href={`https://${user.github}`} target="_blank" rel="noopener noreferrer" ><FaGithub /></a>
                     <a href="" target="_blank" rel="noopener noreferrer" ><FaLinkedin /></a>
                     <a href="" target="_blank" rel="noopener noreferrer" ><SiGmail /></a>
                 </div>

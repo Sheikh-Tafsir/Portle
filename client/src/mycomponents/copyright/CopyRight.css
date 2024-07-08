@@ -1,5 +1,6 @@
 .copyright{
     /* height: 5vw; */
+    background-color: rgb(241,245,249);
 }
 @media (min-width: 1024px) {
     .copyright_mainBox{

@@ -89,16 +89,19 @@ const PortExperience = ({ userId }) => {
                             <span></span>
                             {/* <div className='circle-pointer'></div> */}
                             <div className='textbox'>
-                                <div className='flex justify-end'>
+                                <div className='flex justify-end mb-[10px]'>
                                     {location.pathname === '/profile' &&
-                                        <div onClick={() => navigate("/profile/experiences/update", { state: { experience } })} className='flex justify-end cursor-pointer'><FaEdit/></div>
+                                        <>
+                                            <div onClick={() => navigate("/profile/experiences/update", { state: { experience } })} className='flex justify-end cursor-pointer'><FaEdit/></div>
+                                            <DialogDemo
+                                                title="Delete Experience"
+                                                description="Make sure you want to delete your project before click."
+                                                buttonLabel="Delete"
+                                                onSave={()=>deleteExperience(experience.id)}
+                                            />
+                                        </>
                                     }
-                                    <DialogDemo
-                                        title="Delete Experience"
-                                        description="Make sure you want to delete your project before click."
-                                        buttonLabel="Delete"
-                                        onSave={()=>deleteExperience(experience.id)}
-                                    />
+
 
                                 </div>
                                 <h2>{experience.company}</h2>
