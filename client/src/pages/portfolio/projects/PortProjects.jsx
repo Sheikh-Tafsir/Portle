@@ -69,7 +69,7 @@ const PortProjects = ({ userId }) => {
   
     return (
     <div className='portfolio-projects'>
-        {location.pathname === '/profile' && projects.length < 6  &&
+        {location.pathname === '/profile' && projects.length < 9  &&
             <span className='edit-button-box'>
                 <Link to="/profile/projects/create"><IoIosAddCircleOutline className='add-button'/></Link>
             </span>
@@ -83,7 +83,7 @@ const PortProjects = ({ userId }) => {
         (
             <>
                 <div className='mainbox'>
-                    {projects && projects.slice(0, 6).map((project) => (
+                    {projects && projects.slice(0, 9).map((project) => (
                     <div className='card' key={project.id}>
                         {/* <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png" alt={project.title} /> */}
                         <div className='flex justify-end'>

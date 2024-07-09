@@ -17,6 +17,7 @@ import UpdateProjects from './pages/portfolio/projects/UpdateProjects';
 import UpdateExperience from './pages/portfolio/experience/UpdateExperience';
 import CreateExperience from './pages/portfolio/experience/CreateExperience';
 import PublicRoute from './utils/PublicRoute';
+import UpdateHeromain from './pages/portfolio/heromain/UpdateHeromain';
 
 const App = () => {
   const loggedIn = checkLogin();
@@ -35,6 +36,7 @@ const App = () => {
             
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile/>} />
+              <Route path="/profile/update" element={<UpdateHeromain/>} />
               <Route path="/profile/inputmethod" element={<InputMethod/>} />
               <Route path="/profile/cvinput" element={<Cvinput/>} />
               <Route path="/profile/githubinput" element={<Githubinput/>} />

@@ -60,12 +60,15 @@
 
     .portoflio-heromain .imagebox{
         width: 40%;
+        display: flex;
     }
     .portoflio-heromain .imagebox img{
         width: 28vw;
         height: 28vw;
         border-radius: 50%;
-    
+    }
+    .portoflio-heromain .imagebox .icon{
+        font-size: 1.5vw;
     }
 }
 
@@ -123,6 +126,10 @@
     .portoflio-heromain .textbox .buttonbox Button{
         background-color:blue;
         margin-top: 3vw;
+    }
+    .portoflio-heromain .imagebox{
+        display: flex;
+        flex-direction: column-reverse;
     }
     .portoflio-heromain .imagebox img{
         width: 50vw;
@@ -190,12 +197,14 @@
     }
     .portoflio-heromain .imagebox{
         width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
     }
     .portoflio-heromain .imagebox img{
         width: 70vw;
         height: 70vw;
         border-radius: 50%;
-    
     }
+
 }
 

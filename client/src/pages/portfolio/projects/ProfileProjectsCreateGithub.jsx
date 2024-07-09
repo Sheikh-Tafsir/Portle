@@ -58,7 +58,7 @@ const ProfileProjectsCreateGithub = () => {
                 <div className="grid w-full items-center">
                     <div className="flex flex-col space-y-2.5">
                         <Input type="text" onChange={(event) => {setGithub(event.target.value);}} 
-                        placeholder="https://github.com/<username>/<project>"/>
+                        placeholder="ex: github.com/<username>/<project>"/>
                         <Button onClick={()=>CreateFromGithub()}>
                         { buttonLoading? 
                             <ButtonLoading/>:

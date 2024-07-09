@@ -89,7 +89,7 @@ const deleteExperience = async (id) =>{
     }
 }
 
-const deleteExperiencesByUserId = async (userId) => {
+const deleteAllExperiencesByUserId = async (userId) => {
     try {
         const result = await ExperienceModel.destroy({
             where: { userId: userId }
@@ -137,6 +137,6 @@ module.exports = {
     createExperience,
     updateExperience,
     deleteExperience,
-    deleteExperiencesByUserId,
+    deleteAllExperiencesByUserId,
     getExperienceByUserId,
 }

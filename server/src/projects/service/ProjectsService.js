@@ -131,7 +131,7 @@ const deleteProject = async (id) =>{
     }
 }
 
-const deleteProjectsByUserId = async (userId) => {
+const deleteAllProjectsByUserId = async (userId) => {
     try {
         const result = await ProjectsModel.destroy({
             where: { userId: userId }
@@ -228,7 +228,7 @@ module.exports = {
     createProjectFromGithubLink,
     updateProject,
     deleteProject,
-    deleteProjectsByUserId,
+    deleteAllProjectsByUserId,
     getProjectById,
     getProjectByUserId,
     

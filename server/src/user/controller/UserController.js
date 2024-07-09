@@ -45,12 +45,12 @@ const UserService = require('../service/UserService');
       const {
         name,
         designation,
-        github,
+        github, cvJson, image
       } = req.body;
 
-      const userService = await UserService.updateUser(id, name, designation, github);
+      const userService = await UserService.updateUser(id, name, designation, github, cvJson, image);
       
-      if(userService.user)res.status(200).json(userService);
+      if(userService.message == "User Profile updated")res.status(200).json(userService);
       else res.status(404).json(userService);
     
     } catch (error) {

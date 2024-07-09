@@ -17,35 +17,30 @@ import ButtonLoading from '@/mycomponents/loading/Loading';
 import { apiPath } from '@/utils/apiPath';
 import {useUserContext} from '../../../context/UserContext';
 
-const CreateExperience = () => {
+const UpdateHeromain = () => {
     const navigate = useNavigate();
     const {userInfo, setUserInfo} = useUserContext();
 
-    const [company, setCompany] = useState('');
+    const [name, setName] = useState('');
     const [position, setPosition] = useState('');
-    const [description, setDescription] = useState('');
-    const [dates, setDates] = useState('');
+    const [image, setImage] = useState('');
     
     const [updateProjectStatus, setUpdateProjectStatus] = useState('');
     const [buttonLoading, setButtonLoading] = useState(false);
 
-    const createExperience = async () => {  
+    const updateHeromain = async () => {  
         try{
             setButtonLoading(true);
 
-            const apipath = `${apiPath}/experiences/create`;
-            const response = await axios.post(apipath,
+            const apipath = `${apiPath}/users/${userInfo.id}`;
+            const response = await axios.put(apipath,
             {
-                userId: userInfo.id,
-                company: company,
-                description: description,
-                dates: dates,
-                position: position,
+                image: image
             })
             //console.log(response.data);
             setUpdateProjectStatus(response.data.message)
             setButtonLoading(false);
-            if(response.status == 200 && response.data.message=="Experience created"){
+            if(response.status == 200 && response.data.message == "User Profile updated"){
                 navigate('/profile', { replace: true });
             }
             //window.top.location.href = '/profile';
@@ -64,25 +59,15 @@ const CreateExperience = () => {
             </CardHeader>
             <CardContent className="space-y-2">
                 <div className="space-y-1">
-                        <Label htmlFor="name">Company Name</Label>
-                        <Input type="text" placeholder="ex: Therap BD" value={company} onChange={(event) => {setCompany(event.target.value);}}/>
+                    <Label htmlFor="name">Profile Image Link</Label>
+                    <Input type="text" placeholder="ex: https://www.facebook.com/photo/<something>" value={image} onChange={(event) => {setImage(event.target.value);}}/>
+
                 </div>
-                <div className="space-y-1">
-                    <Label htmlFor="technology">entry date - exit date</Label>
-                    <Input type="text" placeholder="ex: March 2021 - April 2022" value={dates} onChange={(event) => {setDates(event.target.value);}}/>
-                </div>
-                <div className="space-y-1">
-                        <Label htmlFor="livelink">Designation</Label>
-                        <Input type="text" placeholder="Software Engineer" value={position} onChange={(event) => {setPosition(event.target.value);}}/>
-                </div>
-                <div className="space-y-1">
-                        <Label htmlFor="description">Description</Label>
-                        <Input type="text" placeholder="Worked with React and Spring Boot to make web apps" value={description} onChange={(event) => {setDescription(event.target.value);}}/>
-                </div>
+
                 <p>{updateProjectStatus}</p>
             </CardContent>
             <CardFooter>
-                <Button onClick={()=>createExperience()} className="lg:w-[40%]">
+                <Button onClick={()=>updateHeromain()} className="lg:w-[40%]">
                     { buttonLoading? 
                         <ButtonLoading/>:
                         'Save'
@@ -94,4 +79,4 @@ const CreateExperience = () => {
   )
 }
 
-export default CreateExperience
+export default UpdateHeromain

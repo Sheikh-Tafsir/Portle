@@ -237,7 +237,7 @@ const NavigationBar = () => {
                             />
                           }
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 mt-[1vw]">
+                        <DropdownMenuContent className="w-56 mt-[2vw] lg:mt-[1vw]">
                           <DropdownMenuLabel>{userInfo.username}</DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           <DropdownMenuGroup>

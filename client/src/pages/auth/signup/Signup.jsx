@@ -270,13 +270,13 @@ const Signup = () => {
                 <CardContent className="space-y-2">
                     <div className="space-y-1">
                     <Label htmlFor="name">Email</Label>
-                    <Input type="text" placeholder="Insert email" value={email} onChange={(event) => {setEmail(event.target.value);}}
+                    <Input type="email" placeholder="ex something12@gmail.com" value={email} onChange={(event) => {setEmail(event.target.value);}}
                         onKeyDown={handleKeyPress}
                     />
                     </div>
                     <div className="space-y-1">
                         <Label htmlFor="password">Password</Label>
-                        <Input type="password" placeholder="Insert Password" value={password} onChange={(event) => {setPassword(event.target.value);}}/>
+                        <Input type="password" placeholder="ex rahul123" value={password} onChange={(event) => {setPassword(event.target.value);}}/>
                     </div>
                     <p>{loginStatus}</p>
                 </CardContent>
@@ -315,7 +315,7 @@ const Signup = () => {
                 <CardContent className="space-y-2">
                     <div className="space-y-1">
                         <Label htmlFor="current">Name</Label>
-                        <Input type="text" placeholder="Insert name" value={name} 
+                        <Input type="text" placeholder="ex Rahul Jain" value={name} 
                             onChange={(event) => {setName(event.target.value);}}
                             onKeyDown={handleKeyPress}
                             // onChange={handleNameChange}
@@ -325,17 +325,17 @@ const Signup = () => {
                     </div>
                     <div className="space-y-1">
                         <Label htmlFor="current">Email</Label>
-                        <Input type="text" placeholder="Insert email" value={email} onChange={(event) => {setEmail(event.target.value);}}
+                        <Input type="email" placeholder="ex something12@gmail.com" value={email} onChange={(event) => {setEmail(event.target.value);}}
                             onKeyDown={handleKeyPress}
                         />
                     </div>
                     <div className="space-y-1">
                         <Label htmlFor="new">New password</Label>
-                        <Input type="password" placeholder="Insert Password" value={password} onChange={(event) => {setPassword(event.target.value);}}/>
+                        <Input type="password" placeholder="ex rahul123" value={password} onChange={(event) => {setPassword(event.target.value);}}/>
                     </div>
                     <div className="space-y-1">
                         <Label htmlFor="password">Confirm Password</Label>
-                        <Input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(event) => {setConfirmPassword(event.target.value);}} />
+                        <Input type="password" placeholder="ex rahul123" value={confirmPassword} onChange={(event) => {setConfirmPassword(event.target.value);}} />
                     </div>
                     <p>{loginStatus}</p>
                 </CardContent>

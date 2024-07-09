@@ -11,6 +11,7 @@ import './PortHeromain.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
 import { Link } from 'react-router-dom';
 const clientPath = import.meta.env.VITE_CLIENT_PATH;
+import { MdEdit } from "react-icons/md";
 const PortHeromain = ({changeId}) => {
 
     const {userInfo, setUserInfo} = useUserContext();
@@ -84,6 +85,7 @@ const PortHeromain = ({changeId}) => {
                     (<img src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" />):
                     (<img src={user.image} />)
                 }
+                <Link to="/profile/update"><MdEdit className='icon'/></Link>
             </div>
         </div>
     </div>

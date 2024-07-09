@@ -68,7 +68,7 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
     };
 
     //update
-    const updateUser = async (id, name, designation, github, cvJson) => {
+    const updateUser = async (id, name, designation, github, cvJson, image) => {
         try {
             // Check if the provided name already exists for another user
             // console.log("eikhane ase");
@@ -94,7 +94,7 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
                 }
                 // console.log("eitao");
                 const userObj = await getGithubDetails(githubUsername);
-                imageUrl =  userObj.avatar_url;
+                if(!image)imageUrl =  userObj.avatar_url;
             }
             // console.log(id);
             // console.log(name);
@@ -103,25 +103,36 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
             // console.log(cvJson);
             // console.log(imageUrl);
 
-            // Update the user profile
-            const updatedUser = await UserModel.update(
-            {
-                name: name,
-                designation: designation,
-                ...(github && { github: github }),
-                ...(cvJson && { cv: cvJson }),
-                ...(imageUrl != "" && {image: imageUrl}),
-            },
-            { where: { id: id }, returning: true }
-            );
+            // const updatedUser = await UserModel.update(
+            // {
+            //     name: name,
+            //     designation: designation,
+            //     ...(github && { github: github }),
+            //     ...(cvJson && { cv: cvJson }),
+            //     ...(imageUrl != "" && {image: imageUrl}),
+            // },
+            // { where: { id: id }, returning: true }
+            // );
         
-            if (updatedUser[0] === 0) {
-                return { message: "User not found" };
-            }
+            // if (updatedUser[0] === 0) {
+            //     return { message: "User not found" };
+            // }
+            
+            // Update the user profile
+            const existingUser = await UserModel.findByPk(id);
+            if(name)existingUser.name = name;
+            if(designation)existingUser.designation = designation;
+            if(github)existingUser.github = github;
+            if(cvJson)existingUser.cv = cvJson;
+            if(!image && imageUrl)existingUser.image = imageUrl;
+            if(image)existingUser.image = image;
+            
+
+            await existingUser.save();
 
             return {
                 message: "User Profile updated",
-                user: updatedUser[1][0]
+                // user: updatedUser[1][0]
             };
             
         } catch (error) {
@@ -152,14 +163,14 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 
     const extarctInformationFromCv = async (id, information, projects, experiences, cvJson) => {
         try{
-            await ProjectService.deleteProjectsByUserId(id);
-            await ExperienceService.deleteExperiencesByUserId(id);
+            await ProjectService.deleteAllProjectsByUserId(id);
+            await ExperienceService.deleteAllExperiencesByUserId(id);
 
             // Update user information
             // console.log(id);
             // console.log(information)
             // console.log(cvJson);
-            const updateUserInfo = await updateUser(id, information.name, information.designation, information.github, cvJson);
+            const updateUserInfo = await updateUser(id, information.name, information.designation, information.github, cvJson, null);
             // console.log(updateUserInfo.message);
 
             let ret1 = updateUserInfo.message;
@@ -204,8 +215,8 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 
     const extarctInformationFromGithub = async (id, github) => {
         try {
-            await ProjectService.deleteProjectsByUserId(id);
-            await ExperienceService.deleteExperiencesByUserId(id);
+            await ProjectService.deleteAllProjectsByUserId(id);
+            await ExperienceService.deleteAllExperiencesByUserId(id);
             // console.log(id);
             // console.log(github);
             var information = [];
@@ -227,7 +238,7 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 
             information = await getGithubDetails(githubUsername);
             
-            const updateUserInfo = await updateUser(id, information.name, information.bio, github, null);
+            const updateUserInfo = await updateUser(id, information.name, information.bio, github, null, null);
             // console.log(updateUserInfo.message);
             let ret1 = updateUserInfo.message;
 
