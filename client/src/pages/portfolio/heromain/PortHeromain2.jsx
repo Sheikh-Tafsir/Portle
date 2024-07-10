@@ -47,7 +47,9 @@ const PortHeromain2 = ({changeId, username}) => {
     if(pageLoading){
         return(
             <div className='portoflio-heromain'>
-                <PageLoading />
+                <div className='mainbox'>
+                    <PageLoading />
+                </div>
             </div>
         )
     }

@@ -94,7 +94,7 @@ const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
                 }
                 // console.log("eitao");
                 const userObj = await getGithubDetails(githubUsername);
-                if(!image)imageUrl =  userObj.avatar_url;
+                imageUrl =  userObj.avatar_url;
             }
             // console.log(id);
             // console.log(name);

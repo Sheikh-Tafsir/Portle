@@ -3,10 +3,12 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        width: 100%;
         padding: 12% 9% 7% 9%;
         min-height: 100vh;
         min-height: 49vw;
         background:linear-gradient(rgb(247,247,247),white);
+        /* background: red; */
     }
     .portoflio-heromain .textbox{
         width: 58%;

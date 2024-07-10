@@ -50,7 +50,9 @@ const PortHeromain = ({changeId}) => {
     if(pageLoading){
         return(
             <div className='portoflio-heromain'>
-                <PageLoading />
+                <div className='w-[100%] h-[100vh]'>
+                    <PageLoading />
+                </div>
             </div>
         )
     }
@@ -76,8 +78,8 @@ const PortHeromain = ({changeId}) => {
                     Portfolio : {`https://portle-api.vercel.app/portfolio/${userInfo.username}`}
                 </a>
                 <div className='buttonbox'>
-                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio From CV</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
-                    <Button className="bg-blue-600"><Link to="/profile/githubinput">Edit Portfolio From GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
+                    <Button className="bg-blue-600"><Link to="/profile/cvinput">Edit Portfolio With CV</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
+                    <Button className="bg-blue-600"><Link to="/profile/githubinput">Edit Portfolio With GitHub</Link><FaEdit className='ml-[0.3vw] mb-[0.1vw]'/></Button>
                 </div>
             </div>
             <div className='imagebox'>
