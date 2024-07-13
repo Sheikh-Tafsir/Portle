@@ -16,12 +16,15 @@ import {
 import ButtonLoading from '@/mycomponents/loading/Loading';
 import { apiPath } from '@/utils/apiPath';
 import {useUserContext} from '../../../context/UserContext';
+import { Textarea } from '@/components/ui/textarea';
+import { gemini } from '@/utils/gemini';
 
 const UpdateProjects = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { project } = location.state;
     const {userInfo, setUserInfo} = useUserContext();
+    const chat = gemini();
 
     const [name, setName] = useState('');
     const [technology, setTechnology] = useState('');
@@ -31,6 +34,7 @@ const UpdateProjects = () => {
     
     const [updateProjectStatus, setUpdateProjectStatus] = useState('');
     const [buttonLoading, setButtonLoading] = useState(false);
+    const [rephraseLoading, setRephraseLoading] = useState(false);
 
     const doUpdateProject = async () => {  
         try{
@@ -66,34 +70,60 @@ const UpdateProjects = () => {
         setLivelink(project.livelink || '');
     },[project])
 
+    const rephraseDecription = async () => {
+        if(!description || description==""){
+            setUpdateProjectStatus("First write about the project description")
+        }
+        else{
+            setRephraseLoading(true);
+            setUpdateProjectStatus("");
+
+            const command = "rephrase this and make it good description for project and should be less then 30 words";
+            const msg = description + "\n" + command ;
+
+            const result = await chat.sendMessage(msg);
+            const response = await result.response;
+            const responseText = await response.text();
+            setDescription(responseText);
+            setRephraseLoading(false);
+            setUpdateProjectStatus("Description is rephrased");
+        }
+    }
   return (
-    <div className="w-[100%] h-[100vh] flex bg-[url('https://t3.ftcdn.net/jpg/00/94/25/52/360_F_94255289_bLOLo8dVkESH4wP4QNVUg4hWBlcBEEOg.jpg')] bg-cover bg-center">
+    <div className="w-[100%] h-[100vh] flex bg-[url('https://t3.ftcdn.net/jpg/00/94/25/52/360_F_94255289_bLOLo8dVkESH4wP4QNVUg4hWBlcBEEOg.jpg')] bg-cover bg-center pt-[14vw] sm:pt-[8vw] lg:pt-[4vw]">
         <Card className="w-[90vw] sm:w-[400px] mx-auto my-auto">
             <CardHeader>
             <CardTitle>Update  Project</CardTitle>
             
             </CardHeader>
             <CardContent className="space-y-2">
-                <div className="space-y-1">
+                <div className="space-y-0 lg:space-y-1">
                         <Label htmlFor="name">Name</Label>
-                        <Input type="text" placeholder="Insert Password" value={name} onChange={(event) => {setName(event.target.value);}}/>
+                        <Input type="text" placeholder="Edutech" value={name} onChange={(event) => {setName(event.target.value);}}/>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0 lg:space-y-1">
                     <Label htmlFor="technology">Technologies</Label>
-                    <Input type="text" placeholder="Insert email" value={technology} onChange={(event) => {setTechnology(event.target.value);}}/>
+                    <Input type="text" placeholder="HTML CSS" value={technology} onChange={(event) => {setTechnology(event.target.value);}}/>
                 </div>
-                <div className="space-y-1">
-                        <Label htmlFor="description">Description</Label>
-                        <Input type="text" placeholder="Insert Password" value={description} onChange={(event) => {setDescription(event.target.value);}}/>
-                </div>
-                <div className="space-y-1">
+                <div className="space-y-0 lg:space-y-1">
                         <Label htmlFor="livelink">Live Link</Label>
                         <Input type="text" placeholder="Insert Live Link" value={livelink} onChange={(event) => {setLivelink(event.target.value);}}/>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0 lg:space-y-1">
                         <Label htmlFor="githublink">Github Link</Label>
                         <Input type="text" placeholder="Insert Github Link" value={githublink} onChange={(event) => {setGithublink(event.target.value);}}/>
                 </div>
+                <div className="space-y-0 lg:space-y-1">
+                        <Label htmlFor="description">Description</Label>
+                        {/* <Input type="text" placeholder="Decription" value={description} onChange={(event) => {setDescription(event.target.value);}}/> */}
+                        <Textarea type="text" placeholder="Decription" value={description} onChange={(event) => {setDescription(event.target.value);}} />
+                </div>
+                <h4 className='bg-blue-500 text-white w-fit px-[8px] py-[2px] rounded-sm text-sm h-[25px] cursor-pointer' onClick={()=>rephraseDecription()}>
+                    {rephraseLoading ?
+                        <ButtonLoading />:
+                        "Rephrase Decription"
+                    }
+                </h4>
                 <p>{updateProjectStatus}</p>
             </CardContent>
             <CardFooter>
