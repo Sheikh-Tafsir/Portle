@@ -28,7 +28,7 @@ app.use("/projects", require("./src/projects/route/ProjectsRoute"));
 app.use("/experiences", require("./src/experience/route/ExperienceRoute"));
 
 
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
