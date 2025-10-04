@@ -1,17 +1,17 @@
 import React, { useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaGithub, FaLinkedin, FaEdit } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
+import { MdEdit } from "react-icons/md";
+import './PortHeromain.css'
+
 import { apiPath } from '@/utils/apiPath';
 import { Button } from '@/components/ui/button'
-
 import {useUserContext} from '../../../context/UserContext';
-
-import './PortHeromain.css'
 import PageLoading from '@/mycomponents/loading/PageLoading';
-import { Link } from 'react-router-dom';
 const clientPath = import.meta.env.VITE_CLIENT_PATH;
-import { MdEdit } from "react-icons/md";
+
 const PortHeromain = ({changeId}) => {
 
     const {userInfo} = useUserContext();

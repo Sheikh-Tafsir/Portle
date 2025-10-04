@@ -80,7 +80,11 @@ const extarctInformationFromCv = async (req, res) => {
   try {
     const id = req.params.id;
     //console.log(req.body.cv);
-    const cleanedData = req.body.cv.replace(/^```\s*|\s*```$/g, '');
+    // const cleanedData = req.body.cv.replace(/^```\s*|\s*```$/g, '');
+    const cleanedData = req.body.cv.trim()
+      .replace(/^```json\s*/, '')
+      .replace(/```$/, '')
+      .trim();
 
     // Parse the cleaned string to a JSON object
     const data = JSON.parse(cleanedData);
