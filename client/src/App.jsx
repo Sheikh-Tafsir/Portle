@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {Routes, Route, BrowserRouter, Navigate} from "react-router-dom";
 import './App.css'
-import {useUserContext, UserProvider} from './context/UserContext';
+import {UserProvider} from './context/UserContext';
 import { checkLogin } from './utils/checkLogin';
 import Login from './pages/auth/login/Login';
 import Homepage from './pages/homepage/Homepage';

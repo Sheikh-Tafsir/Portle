@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 
-// const auth = require('./middleware/auth')
 // const rateLimiter = require('./middleware/rateLimiter')
 
 var corsOptions = {

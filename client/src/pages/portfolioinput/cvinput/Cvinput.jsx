@@ -24,12 +24,11 @@ const API_KEY = import.meta.env.VITE_GOOGLE_AI_API_KEY; // Replace with your act
 const Cvinput = () => {
     const [inputValue, setInputValue] = useState('');
     const [chatHistory, setChatHistory] = useState([]);
-    const [portfolioObj, setPortfolioObj] = useState([]);
     const [buttonLoading, setButtonLoading] = useState(false);
     const [uploadStatus, setUploadStatus] = useState("");
 
     const navigate = useNavigate();
-    const {userInfo, setUserInfo} = useUserContext();
+    const {userInfo} = useUserContext();
 
     const extractText = (event) => {
         const file = event.target.files[0];
@@ -56,7 +55,7 @@ const Cvinput = () => {
             setButtonLoading(true);
             setUploadStatus("please wait");
             const genAI = new GoogleGenerativeAI(API_KEY);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             const chat = model.startChat({
                 history: chatHistory.map(message => ({

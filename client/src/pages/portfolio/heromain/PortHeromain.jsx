@@ -14,7 +14,7 @@ const clientPath = import.meta.env.VITE_CLIENT_PATH;
 import { MdEdit } from "react-icons/md";
 const PortHeromain = ({changeId}) => {
 
-    const {userInfo, setUserInfo} = useUserContext();
+    const {userInfo} = useUserContext();
     const [user, setUser] = useState([]);
     const [pageLoading, setPageLoading] = useState(true);
 
@@ -26,9 +26,7 @@ const PortHeromain = ({changeId}) => {
         try{
             const apipath = `${apiPath}/users/${userInfo.username}`;
             const response = await axios.get(apipath)
-            // if(response.data.message == "found user by id"){
-            //     setUser(response.data.user)
-            // }
+
             if(response.data.message == "found user by username"){
                 setUser(response.data.user)
                 handleChangeId(response.data.user.id);
